@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router';
 import Navbar from '../Layout/Navbar';
+import WhyUs from './WhyUs';
+import Featured from '../Components/Featured';
 
 const HomePage = () => {
     return (
@@ -8,6 +10,8 @@ const HomePage = () => {
         <Navbar></Navbar>
         <div className="w-11/12 mx-auto pt-20">
           <Outlet></Outlet>
+          <Featured></Featured>
+          <WhyUs></WhyUs>
         </div>
       </div>
     );
