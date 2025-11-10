@@ -6,7 +6,9 @@ const HomePage = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <Outlet></Outlet>
+            <div className='w-11/12 mx-auto'>
+                <Outlet></Outlet>
+            </div>
         </div>
     );
 };
