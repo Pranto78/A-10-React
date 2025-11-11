@@ -118,9 +118,9 @@ const Featured = () => {
 
           {/* Show All Button */}
           <div className="flex justify-center mt-10">
-            <button className="btn btn-primary btn-lg px-8 py-3 font-semibold">
+            <NavLink to="/allProperties" className="btn btn-primary btn-lg px-8 py-3 font-semibold">
               Show All
-            </button>
+            </NavLink>
           </div>
         </>
       )}

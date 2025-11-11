@@ -9,6 +9,8 @@ import Home from './Components/Home.jsx';
 import PropertyDetails from './Pages/PropertyDetails.jsx';
 import Featured from './Components/Featured.jsx';
 import WhyUs from './Components/WhyUs.jsx';
+import AllProperty from './Pages/AllProperty.jsx';
+import Login from './Pages/Login.jsx';
 
 
 const router = createBrowserRouter([
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
       {
         path: "propertyDetails/:id",
         element: <PropertyDetails />,
+      },
+      {
+        path: "allProperties",
+        element: <AllProperty></AllProperty>,
+      },
+      {
+        path: "login",
+        element: <Login></Login>,
       },
     ],
   },

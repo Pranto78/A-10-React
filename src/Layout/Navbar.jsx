@@ -3,18 +3,18 @@ import { NavLink } from "react-router";
 import logo from "../assets/nest.png";
 
 const Navbar = () => {
-  // ✅ Theme State
+  // Theme state
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
 
-  // ✅ Apply Theme
+  // Apply theme
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // ✅ Toggle Button Handler
+  // Toggle theme
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -57,8 +57,8 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
-          <img src={logo} className="h-[50px] w-[50px]" alt="" /> Home{" "}
+        <a className="btn btn-ghost text-xl flex items-center gap-2">
+          <img src={logo} className="h-[40px] w-[40px]" alt="Logo" /> Home{" "}
           <span className="text-yellow-600 font-bold">Nest</span>
         </a>
       </div>
@@ -68,56 +68,51 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end flex items-center gap-3">
-        {/* ✅ ADDED THEME TOGGLE BUTTON */}
+        {/* Compact Theme Toggle */}
         <div
           onClick={toggleTheme}
-          className={`flex items-center cursor-pointer transition-all duration-300 px-3 py-1 rounded-full border 
+          className={`flex items-center cursor-pointer transition-all duration-300 px-2 py-1 rounded-full border text-xs
           ${
             theme === "light"
-              ? "bg-gray-200 border-gray-300"
-              : "bg-black border-gray-700"
+              ? "bg-gray-200 border-gray-300 text-gray-800"
+              : "bg-gray-900 border-gray-700 text-white"
           }`}
         >
           {theme === "light" ? (
-            <div className="flex items-center gap-2 text-black font-semibold">
-              <span>DAY MODE</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 4.354a8 8 0 110 15.292 8 8 0 010-15.292z"
-                />
-              </svg>
-            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4 mr-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 4.354a8 8 0 110 15.292 8 8 0 010-15.292z"
+              />
+            </svg>
           ) : (
-            <div className="flex items-center gap-2 text-white font-semibold">
-              <span>NIGHT MODE</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M20 12.354A8 8 0 1111.646 4a8.001 8.001 0 008.354 8.354z"
-                />
-              </svg>
-            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4 mr-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M20 12.354A8 8 0 1111.646 4a8.001 8.001 0 008.354 8.354z"
+              />
+            </svg>
           )}
+          <span>{theme === "light" ? "DAY" : "NIGHT"}</span>
         </div>
 
-        <a className="btn">Login</a>
+        <a className="btn btn-sm px-3 py-1">Login</a>
       </div>
     </div>
   );
