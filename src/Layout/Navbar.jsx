@@ -112,7 +112,8 @@ const Navbar = () => {
           <span>{theme === "light" ? "DAY" : "NIGHT"}</span>
         </div>
 
-        <a className="btn btn-sm px-3 py-1">Login</a>
+        <NavLink to="/login" className="btn btn-sm px-3 py-1">Login</NavLink>
+        <NavLink to="/registration" className="btn btn-sm px-3 py-1">SignUp</NavLink>
       </div>
     </div>
   );

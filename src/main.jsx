@@ -11,6 +11,8 @@ import Featured from './Components/Featured.jsx';
 import WhyUs from './Components/WhyUs.jsx';
 import AllProperty from './Pages/AllProperty.jsx';
 import Login from './Pages/Login.jsx';
+import Registration from './Pages/Registration.jsx';
+import AuthProvider from './Provider/AuthProvider.jsx';
 
 
 const router = createBrowserRouter([
@@ -40,12 +42,18 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login></Login>,
       },
+      {
+        path:"registration",
+        element:<Registration></Registration>
+      }
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />,
+    <AuthProvider>
+      <RouterProvider router={router} />,
+    </AuthProvider>
   </StrictMode>
 );
