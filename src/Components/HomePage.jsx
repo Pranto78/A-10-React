@@ -10,8 +10,7 @@ const HomePage = () => {
         <Navbar></Navbar>
         <div className="w-11/12 mx-auto pt-20">
           <Outlet></Outlet>
-          <Featured></Featured>
-          <WhyUs></WhyUs>
+          
         </div>
       </div>
     );
