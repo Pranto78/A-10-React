@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router";
+import { AuthContext } from "../Provider/AuthContext";
 import logo from "../assets/nest.png";
 
 const Navbar = () => {
-  // Theme state
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-  );
+  const { user, signOutUser } = useContext(AuthContext);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   // Apply theme
   useEffect(() => {
@@ -14,10 +14,7 @@ const Navbar = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Toggle theme
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
   const links = (
     <>
@@ -32,6 +29,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50">
+      {/* Start */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -57,22 +55,26 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl flex items-center gap-2">
-          <img src={logo} className="h-[40px] w-[40px]" alt="Logo" /> Home{" "}
-          <span className="text-yellow-600 font-bold">Nest</span>
-        </a>
+        <NavLink
+          className="btn btn-ghost text-xl flex items-center gap-2"
+          to="/"
+        >
+          <img src={logo} className="h-[40px] w-[40px]" alt="Logo" />
+          Home <span className="text-yellow-600 font-bold">Nest</span>
+        </NavLink>
       </div>
 
+      {/* Center */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
 
+      {/* End */}
       <div className="navbar-end flex items-center gap-3">
-        {/* Compact Theme Toggle */}
+        {/* Theme Toggle */}
         <div
           onClick={toggleTheme}
-          className={`flex items-center cursor-pointer transition-all duration-300 px-2 py-1 rounded-full border text-xs
-          ${
+          className={`flex items-center cursor-pointer transition-all duration-300 px-2 py-1 rounded-full border text-xs ${
             theme === "light"
               ? "bg-gray-200 border-gray-300 text-gray-800"
               : "bg-gray-900 border-gray-700 text-white"
@@ -112,8 +114,42 @@ const Navbar = () => {
           <span>{theme === "light" ? "DAY" : "NIGHT"}</span>
         </div>
 
-        <NavLink to="/login" className="btn btn-sm px-3 py-1">Login</NavLink>
-        <NavLink to="/registration" className="btn btn-sm px-3 py-1">SignUp</NavLink>
+        {/* User / Auth Buttons */}
+        {!user ? (
+          <>
+            <NavLink to="/login" className="btn btn-sm px-3 py-1">
+              Login
+            </NavLink>
+            <NavLink to="/registration" className="btn btn-sm px-3 py-1">
+              SignUp
+            </NavLink>
+          </>
+        ) : (
+          <div className="relative">
+            <img
+              src={user.photoURL || "https://via.placeholder.com/40"}
+              alt="User"
+              className="h-10 w-10 rounded-full cursor-pointer"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            />
+            {dropdownOpen && (
+              <ul className="absolute right-0 mt-2 w-56 bg-base-100 border rounded-md shadow-lg p-2 z-50">
+                <li className="p-2 border-b">
+                  <p className="font-semibold">{user.displayName}</p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
+                </li>
+                <li className="p-2">
+                  <button
+                    onClick={() => signOutUser()}
+                    className="btn btn-outline w-full"
+                  >
+                    Log Out
+                  </button>
+                </li>
+              </ul>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

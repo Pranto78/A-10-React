@@ -13,12 +13,15 @@ import AllProperty from './Pages/AllProperty.jsx';
 import Login from './Pages/Login.jsx';
 import Registration from './Pages/Registration.jsx';
 import AuthProvider from './Provider/AuthProvider.jsx';
+import AddProperty from './Private/AddProperty.jsx';
+import Error404 from './Error/Error404.jsx';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage></HomePage>,
+    errorElement:<Error404></Error404>,
     children: [
       {
         index: true,
@@ -45,7 +48,11 @@ const router = createBrowserRouter([
       {
         path:"registration",
         element:<Registration></Registration>
-      }
+      },
+      {
+        path:"addProperty",
+        element:<AddProperty></AddProperty>
+      },
     ],
   },
 ]);
