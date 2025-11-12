@@ -89,7 +89,7 @@ const AllProperty = () => {
                 <div className="card-actions justify-end mt-4">
                   <NavLink
                     to={`/propertyDetails/${property._id}`}
-                    className="btn btn-primary btn-sm w-full"
+                    className="btn w-full text-white font-semibold bg-gradient-to-r from-[#3498db] to-[#9b59b6] border-none hover:opacity-90 transition-all duration-300"
                   >
                     View Details
                   </NavLink>

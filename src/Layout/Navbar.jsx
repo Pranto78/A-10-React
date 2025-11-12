@@ -24,6 +24,20 @@ const Navbar = () => {
       <li>
         <NavLink to="/allProperties">All Properties</NavLink>
       </li>
+      {/* ✅ Private Links — only visible when logged in */}
+      {user && (
+        <>
+          <li>
+            <NavLink to="/addProperty">Add Property</NavLink>
+          </li>
+          <li>
+            <NavLink to="/myProperties">My Properties</NavLink>
+          </li>
+          <li>
+            <NavLink to="/myRatings">My Ratings</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 

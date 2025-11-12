@@ -3,7 +3,8 @@ import { AuthContext } from "../Provider/AuthContext";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 
 const Register = () => {
-  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const { createUser, signInWithGoogle, updateUserProfile } =
+    useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
 
   const handleRegister = (e) => {
@@ -15,8 +16,10 @@ const Register = () => {
 
     createUser(email, password)
       .then((result) => {
-        console.log("User Created:", result.user);
-        console.log("Name:", name, "PhotoURL:", photoURL);
+        return updateUserProfile(name, photoURL);
+      })
+      .then(() => {
+        console.log("✅ Profile updated successfully!");
       })
       .catch((error) => console.log(error));
   };
