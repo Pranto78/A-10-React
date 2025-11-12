@@ -31,7 +31,6 @@ const MyProperty = () => {
     fetchMyProperties();
   }, [user]);
 
-  // Handle Delete
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
@@ -51,9 +50,13 @@ const MyProperty = () => {
         const result = await res.json();
 
         if (result.deletedCount > 0) {
+          // ✅ SweetAlert success
           Swal.fire("Deleted!", "Property has been deleted.", "success");
-          // Update UI instantly
+
+          // ✅ Instantly remove from UI
           setProperties((prev) => prev.filter((item) => item._id !== id));
+        } else {
+          toast.error("Delete failed. Please try again!");
         }
       } catch (error) {
         console.error(error);
@@ -126,7 +129,7 @@ const MyProperty = () => {
                 <div className="mt-4 flex flex-wrap gap-3">
                   <button
                     onClick={() => handleView(property._id)}
-                    className="btn btn-sm bg-blue-500 hover:bg-blue-600 border-none text-white rounded-xl"
+                    className="btn btn-sm bg-gradient-to-r from-[#3498db] to-[#9b59b6] border-none hover:opacity-90 transition-all duration-300 text-white rounded-xl"
                   >
                     View Details
                   </button>
