@@ -135,13 +135,13 @@ const MyProperty = () => {
                   </button>
                   <button
                     onClick={() => handleUpdate(property._id)}
-                    className="btn btn-sm bg-yellow-500 hover:bg-yellow-600 border-none text-white rounded-xl"
+                    className="btn btn-sm text-white font-semibold bg-gradient-to-r from-[#f39c12] to-[#f1c40f] hover:from-[#e67e22] hover:to-[#f39c12] border-none rounded-xl transition-all duration-300"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => handleDelete(property._id)}
-                    className="btn btn-sm bg-red-500 hover:bg-red-600 border-none text-white rounded-xl"
+                    className="btn btn-sm text-white font-semibold bg-gradient-to-r from-[#e74c3c] to-[#c0392b] hover:from-[#ff6b6b] hover:to-[#ff4b2b] border-none rounded-xl transition-all duration-300"
                   >
                     Delete
                   </button>
