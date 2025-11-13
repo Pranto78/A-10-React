@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+// MyPropertiesDetails.jsx
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
 import { FaMapMarkerAlt, FaTag, FaUserCircle, FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import toast from "react-hot-toast";
+import { AuthContext } from "../Provider/AuthContext";
 
 const MyPropertiesDetails = () => {
   const { id } = useParams();
@@ -12,38 +15,42 @@ const MyPropertiesDetails = () => {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const { user } = useContext(AuthContext);
 
-  // ✅ Fetch property and reviews
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://localhost:4000/getMyProperty`)
+    // fetch properties list and find by id
+    fetch("http://localhost:4000/getMyProperty")
       .then((res) => res.json())
       .then((data) => {
-        const found = data.find((item) => item._id === id);
-        setProperty(found);
+        const found = Array.isArray(data)
+          ? data.find((item) => item._id === id)
+          : null;
+        setProperty(found || null);
       })
       .catch((err) => console.error("Error fetching property:", err));
 
+    // fetch reviews for this property (note backticks)
     fetch(`http://localhost:4000/reviews?propertyId=${id}`)
       .then((res) => res.json())
-      .then((data) => setReviews(data))
+      .then((data) => setReviews(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error fetching reviews:", err));
   }, [id]);
 
-  // ✅ Handle review submission
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     if (!rating || !reviewText.trim()) {
-      alert("Please add rating and review!");
+      toast.error("Please add rating and review!");
       return;
     }
-
     const newReview = {
       propertyId: id,
       rating,
       reviewText,
-      reviewerName: "Authenticated User", // Replace with actual user later
+      reviewerName: user?.displayName || "Anonymous User",
+      reviewerPhoto: user?.photoURL || null, // <- add this
+      userId: user?.uid,
       date: new Date().toISOString(),
     };
 
@@ -54,21 +61,26 @@ const MyPropertiesDetails = () => {
     })
       .then((res) => res.json())
       .then((saved) => {
-        setReviews([saved, ...reviews]);
+        // add saved review to start of list (if backend returns it)
+        setReviews((prev) => [saved, ...prev]);
         setRating(0);
         setReviewText("");
+        toast.success("Review submitted successfully!");
       })
-      .catch((err) => console.error("Error posting review:", err));
+      .catch((err) => {
+        console.error("Error posting review:", err);
+        toast.error("Failed to submit review.");
+      });
   };
 
-  if (!property)
+  if (!property) {
     return (
       <div className="text-center py-20 text-gray-500 dark:text-gray-400">
         Loading property details...
       </div>
     );
+  }
 
-  // ✅ Use correct DB fields
   const {
     name = "Unnamed Property",
     description = "No description provided.",
@@ -82,7 +94,7 @@ const MyPropertiesDetails = () => {
   } = property;
 
   const displayImage =
-    image && image.startsWith("http")
+    image && typeof image === "string" && image.startsWith("http")
       ? image
       : "https://via.placeholder.com/800x400?text=No+Image+Available";
 
@@ -92,13 +104,11 @@ const MyPropertiesDetails = () => {
 
   return (
     <div className="px-5 md:px-20 py-16 bg-base-100 dark:bg-gray-900 transition duration-300">
-      {/* 🏡 Property Details */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-5xl mx-auto bg-base-200 dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden"
       >
-        {/* 📸 Image */}
         <div className="p-4 bg-base-100 dark:bg-gray-900">
           <Swiper
             modules={[Autoplay]}
@@ -110,18 +120,16 @@ const MyPropertiesDetails = () => {
               <img
                 src={displayImage}
                 alt={name}
-                className="h-96 w-full object-contain rounded-xl"
+                className="h-96 w-full object-cover rounded-xl"
               />
             </SwiperSlide>
           </Swiper>
         </div>
 
-        {/* 🧾 Info */}
         <div className="p-8 space-y-4">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
             {name}
           </h1>
-
           <div className="flex flex-wrap gap-3 text-gray-600 dark:text-gray-300">
             <span className="flex items-center gap-2">
               <FaTag className="text-primary" /> {category}
@@ -137,7 +145,6 @@ const MyPropertiesDetails = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-5">
             <p className="text-2xl font-bold text-[#3498db]">৳{price}</p>
-
             <div className="flex items-center gap-3 mt-3 sm:mt-0">
               <FaUserCircle className="text-2xl text-gray-400" />
               <div>
@@ -153,7 +160,6 @@ const MyPropertiesDetails = () => {
         </div>
       </motion.div>
 
-      {/* ⭐ Reviews Section */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -163,13 +169,13 @@ const MyPropertiesDetails = () => {
           Ratings & Reviews
         </h2>
 
-        {/* 📝 Add Review */}
         <form
           onSubmit={handleReviewSubmit}
           className="mb-10 flex flex-col gap-4 bg-base-300 dark:bg-gray-700 p-5 rounded-xl"
         >
           <label className="font-semibold text-gray-800 dark:text-gray-100">
-            Your Rating:
+            {" "}
+            Your Rating:{" "}
           </label>
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -199,16 +205,15 @@ const MyPropertiesDetails = () => {
           </button>
         </form>
 
-        {/* 💬 Display Reviews */}
         <div className="space-y-6">
           {reviews.length === 0 ? (
             <p className="text-gray-500 dark:text-gray-400">
               No reviews yet. Be the first to review this property!
             </p>
           ) : (
-            reviews.map((review, index) => (
+            reviews.map((review) => (
               <div
-                key={index}
+                key={review._id || review.date || Math.random()}
                 className="p-5 bg-base-300 dark:bg-gray-700 rounded-xl shadow-sm"
               >
                 <div className="flex items-center justify-between mb-2">
@@ -216,11 +221,11 @@ const MyPropertiesDetails = () => {
                     {review.reviewerName || "Anonymous"}
                   </h4>
                   <div className="flex">
-                    {[1, 2, 3, 4, 5].map((star) => (
+                    {[1, 2, 3, 4, 5].map((s) => (
                       <FaStar
-                        key={star}
+                        key={s}
                         className={`text-sm ${
-                          star <= review.rating
+                          s <= (review.rating || 0)
                             ? "text-yellow-400"
                             : "text-gray-400"
                         }`}
@@ -228,6 +233,7 @@ const MyPropertiesDetails = () => {
                     ))}
                   </div>
                 </div>
+
                 <p className="text-gray-700 dark:text-gray-300">
                   {review.reviewText}
                 </p>

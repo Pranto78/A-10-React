@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const AddProperty = () => {
   const { user } = useContext(AuthContext);
+
   const [propertyData, setPropertyData] = useState({
     name: "",
     description: "",
@@ -21,6 +22,7 @@ const AddProperty = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check required fields
     if (
       !propertyData.name ||
       !propertyData.description ||
@@ -31,10 +33,11 @@ const AddProperty = () => {
       return toast.error("Please fill in all required fields!");
     }
 
+    // Merge user info
     const newProperty = {
       ...propertyData,
-      userName: user?.displayName || "Anonymous",
-      userEmail: user?.email || "No Email",
+      postedBy: user?.displayName || "Anonymous User",
+      postedEmail: user?.email || "No email provided",
       postedDate: new Date().toISOString(),
     };
 
@@ -56,6 +59,8 @@ const AddProperty = () => {
           location: "",
           image: "",
         });
+      } else {
+        toast.error("Failed to add property.");
       }
     } catch (err) {
       console.error(err);
@@ -103,7 +108,7 @@ const AddProperty = () => {
           />
         </div>
 
-        {/* Category & Price (Responsive Flex) */}
+        {/* Category & Price */}
         <div className="flex flex-col md:flex-row md:space-x-4 gap-4">
           {/* Category */}
           <div className="flex-1 flex flex-col">

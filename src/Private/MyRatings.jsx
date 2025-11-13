@@ -1,127 +1,175 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router";
-import { FaStar } from "react-icons/fa";
+import React, { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../Provider/AuthContext";
+import { FaStar, FaMapMarkerAlt, FaTag } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-// Replace with the real API base if different
-const API_BASE = "http://localhost:4000";
+const MyRatings = () => {
+  const { user, loading } = useContext(AuthContext);
+  const [myReviews, setMyReviews] = useState([]);
 
-const MyRatings = ({ userId }) => {
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!userId) {
-      // for dev: you can set a default test user
-      console.warn(
-        "MyRatings: no userId provided. Provide userId prop from auth."
+useEffect(() => {
+  const fetchReviewsWithProperties = async () => {
+    if (!user) return; // wait until user is loaded
+    try {
+      const res = await fetch(
+        `http://localhost:4000/reviews/with-property?userId=${user.uid}`
       );
+      const data = await res.json();
+      const reviews = Array.isArray(data) ? data : [];
+
+      // Fetch property details if needed
+      const reviewsWithProps = await Promise.all(
+        reviews.map(async (review) => {
+          if (review.property && review.property.name) return review;
+
+          if (review.propertyId) {
+            try {
+              const propRes = await fetch(
+                `http://localhost:4000/properties/${review.propertyId}`
+              );
+              if (!propRes.ok) throw new Error("Property not found");
+              const propData = await propRes.json();
+              return { ...review, property: propData };
+            } catch (err) {
+              console.warn(
+                `Error fetching property ${review.propertyId}:`,
+                err
+              );
+              return { ...review, property: null };
+            }
+          }
+
+          return { ...review, property: null };
+        })
+      );
+
+      setMyReviews(reviewsWithProps);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
     }
+  };
 
-    const fetchReviews = async () => {
-      try {
-        // recommended: use /reviews/with-property to get property data alongside reviews
-        const url = `${API_BASE}/reviews/with-property?userId=${userId || ""}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        setReviews(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReviews();
-  }, [userId]);
+  fetchReviewsWithProperties();
+}, [user]);
 
   if (loading) {
-    return <div className="text-center py-20">Loading your reviews...</div>;
+    return (
+      <div className="text-center py-20 text-gray-500 dark:text-gray-400">
+        Loading your reviews...
+      </div>
+    );
   }
 
-  if (!reviews.length) {
+  if (!user) {
     return (
-      <div className="text-center py-20 text-gray-500">
-        You haven't reviewed any properties yet.
+      <div className="text-center py-20 text-gray-500 dark:text-gray-400">
+        Please log in to see your reviews.
       </div>
     );
   }
 
   return (
-    <div className="px-5 md:px-20 py-12">
-      <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-        My Ratings
-      </h2>
+    <div className="px-5 md:px-20 py-16 bg-base-100 dark:bg-gray-900 transition duration-300">
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-10">
+        My Ratings & Reviews
+      </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {reviews.map((r) => {
-          // if you used the aggregation, property is available as r.property
-          const prop = r.property || r.propertyDoc || {};
-          return (
-            <motion.div
-              key={r._id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.02 }}
-              className="bg-base-200 dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden"
-            >
-              <div className="flex">
-                <div className="w-36 h-28 overflow-hidden">
-                  <img
-                    src={
-                      prop.image ||
-                      "https://via.placeholder.com/150x100?text=No+Image"
-                    }
-                    alt={prop.name || "Property thumb"}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+      {myReviews.length === 0 ? (
+        <p className="text-gray-500 dark:text-gray-400">
+          You haven't submitted any reviews yet.
+        </p>
+      ) : (
+        <div className="grid gap-8">
+          {myReviews.map((review, index) => {
+            const property = review.property || {};
 
-                <div className="p-4 flex-1 flex flex-col justify-between">
+            const image =
+              property.image && property.image.startsWith("http")
+                ? property.image
+                : "https://via.placeholder.com/200x150?text=No+Image";
+
+            const propName = property.name || "Unknown Property";
+            const category = property.category || "Unknown";
+            const location = property.location || "Unknown";
+
+          const reviewerName = review.reviewerName || "Anonymous";
+          const reviewerPhoto =
+            review.reviewerPhoto || "https://via.placeholder.com/80?text=User";
+          const reviewerEmail = review.reviewerEmail || "";
+
+            return (
+              <motion.div
+                key={review._id || index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col sm:flex-row gap-5 bg-base-200 dark:bg-gray-800 rounded-2xl shadow-lg p-5"
+              >
+                <img
+                  src={image}
+                  alt={propName}
+                  className="w-full sm:w-48 h-32 object-cover rounded-xl"
+                />
+
+                <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                      {prop.name || "Unknown Property"}
-                    </h3>
-                    <p className="text-sm text-gray-500 mt-1">
-                      {prop.location || ""}
+                    {/* Reviewer header */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <img
+                        src={reviewerPhoto}
+                        alt={reviewerName}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      <div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">
+                          {reviewerName}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {reviewerEmail || ""}
+                        </div>
+                      </div>
+                    </div>
+
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                      {propName}
+                    </h2>
+                    <div className="flex flex-wrap gap-3 text-gray-600 dark:text-gray-300 text-sm mb-2">
+                      <span className="flex items-center gap-1">
+                        <FaTag className="text-primary" /> {category}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <FaMapMarkerAlt className="text-error" /> {location}
+                      </span>
+                    </div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      {review.comment}
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between mt-3">
+                  <div className="mt-3 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((s) => (
+                      {[1, 2, 3, 4, 5].map((star) => (
                         <FaStar
-                          key={s}
-                          className={`text-sm ${
-                            s <= r.rating ? "text-yellow-400" : "text-gray-300"
+                          key={star}
+                          className={`${
+                            star <= (review.rating || 0)
+                              ? "text-yellow-400"
+                              : "text-gray-400"
                           }`}
                         />
                       ))}
-                      <span className="text-sm ml-2 text-gray-500">
-                        ({r.rating})
-                      </span>
                     </div>
-
-                    <NavLink
-                      to={`/propertyDetails/${prop._id || prop._id}`}
-                      className="px-4 py-2 rounded-md text-white font-semibold bg-gradient-to-r from-[#3498db] to-[#9b59b6] hover:opacity-90 transition"
-                    >
-                      View
-                    </NavLink>
+                    <span>
+                      {review.date
+                        ? new Date(review.date).toLocaleDateString()
+                        : "N/A"}
+                    </span>
                   </div>
-
-                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-3 line-clamp-2">
-                    {r.reviewText}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {new Date(r.date).toLocaleDateString()}
-                  </p>
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

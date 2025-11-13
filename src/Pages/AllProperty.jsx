@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaMapMarkerAlt, FaTag } from "react-icons/fa";
+import { FaMapMarkerAlt, FaTag, FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router";
 
@@ -16,27 +16,49 @@ const cardVariants = {
 
 const AllProperty = () => {
   const [properties, setProperties] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:4000/featured-properties")
+    fetch("http://localhost:4000/all-properties")
       .then((res) => res.json())
       .then((data) => setProperties(data))
       .catch((err) => console.error("Error fetching properties:", err));
   }, []);
 
+  // Filter properties by name
+  const filteredProperties = properties.filter((property) =>
+    property.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="py-20 px-5 md:px-16 bg-base-100 transition duration-300">
-      <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">
-        All Properties
-      </h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          All Properties
+        </h2>
 
-      {properties.length === 0 ? (
+        {/* Search Bar */}
+        <div className="relative w-full sm:w-64">
+          <FaSearch className="absolute top-3 left-3 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-300 shadow-sm placeholder-gray-400"
+          />
+        </div>
+      </div>
+
+      {filteredProperties.length === 0 ? (
         <div className="text-center text-gray-500 dark:text-gray-400">
-          Loading properties...
+          {properties.length === 0
+            ? "Loading properties..."
+            : "No properties found."}
         </div>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {properties.map((property) => (
+          {filteredProperties.map((property) => (
             <motion.div
               key={property._id}
               variants={cardVariants}

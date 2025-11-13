@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router"; // ✅ using react-router only
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { FaMapMarkerAlt, FaTag, FaUserCircle, FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import { AuthContext } from "../Provider/AuthContext";
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -12,16 +13,19 @@ const PropertyDetails = () => {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const { user } = useContext(AuthContext);
 
-  // 🧩 Fetch property and reviews
+  // 🧩 Fetch property + reviews
   useEffect(() => {
     if (!id) return;
 
+    // Fetch property details
     fetch(`http://localhost:4000/properties/${id}`)
       .then((res) => res.json())
       .then((data) => setProperty(data))
       .catch((err) => console.error("Error fetching property:", err));
 
+    // Fetch reviews
     fetch(`http://localhost:4000/reviews?propertyId=${id}`)
       .then((res) => res.json())
       .then((data) => setReviews(data))
@@ -31,14 +35,19 @@ const PropertyDetails = () => {
   // 🧩 Handle Review Submit
   const handleReviewSubmit = (e) => {
     e.preventDefault();
-    if (!rating || !reviewText.trim())
-      return alert("Please add rating & review!");
+    if (!rating || !reviewText.trim()) {
+      return alert("Please add both a rating and a review!");
+    }
 
     const newReview = {
       propertyId: id,
       rating,
-      reviewText,
-      reviewerName: "Anonymous User", // replace later with logged user
+      comment: reviewText, // ✅ use "comment" key (consistent with backend)
+      reviewerName: user?.displayName || "Anonymous User",
+      reviewerEmail: user?.email || "No email provided",
+      reviewerPhoto:
+        user?.photoURL || "https://via.placeholder.com/80?text=User",
+      userId: user?.uid || null,
       date: new Date().toISOString(),
     };
 
@@ -63,6 +72,7 @@ const PropertyDetails = () => {
       </div>
     );
 
+  // 🧩 Extract property info safely
   const {
     name = "Unnamed Property",
     category = "Uncategorized",
@@ -72,6 +82,7 @@ const PropertyDetails = () => {
     image,
     images,
     postedBy,
+    postedEmail,
     postedDate,
   } = property;
 
@@ -80,8 +91,6 @@ const PropertyDetails = () => {
       ? image
       : "https://via.placeholder.com/800x400?text=No+Image+Available";
 
-  const displayName = postedBy?.name || "Anonymous";
-  const displayEmail = postedBy?.email || "No email provided";
   const displayDate = postedDate
     ? new Date(postedDate).toLocaleDateString()
     : "N/A";
@@ -94,7 +103,7 @@ const PropertyDetails = () => {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-5xl mx-auto bg-base-200 dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden"
       >
-        {/* 📸 Image / Gallery (with padding + rounded edges) */}
+        {/* 📸 Image / Gallery */}
         <div className="p-4 bg-base-100 dark:bg-gray-900">
           <Swiper
             modules={[Autoplay]}
@@ -152,14 +161,19 @@ const PropertyDetails = () => {
               ৳{price?.toLocaleString()}
             </p>
 
+            {/* 👤 Posted Info */}
             <div className="flex items-center gap-3 mt-3 sm:mt-0">
               <FaUserCircle className="text-2xl text-gray-400" />
               <div>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
                   Posted by:{" "}
-                  <span className="font-semibold">{displayName}</span>
+                  <span className="font-semibold">
+                    {postedBy || "Fahim Pranto"}
+                  </span>
                 </p>
-                <p className="text-xs text-gray-500">{displayEmail}</p>
+                <p className="text-xs text-gray-500">
+                  {postedEmail || "fahimpranto41@gmail.com"}
+                </p>
               </div>
             </div>
           </div>
@@ -168,7 +182,7 @@ const PropertyDetails = () => {
         </div>
       </motion.div>
 
-      {/* ⭐ Ratings & Reviews Section */}
+      {/* ⭐ Ratings & Reviews */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -178,7 +192,7 @@ const PropertyDetails = () => {
           Ratings & Reviews
         </h2>
 
-        {/* 📝 Add Review Form */}
+        {/* 📝 Add Review */}
         <form
           onSubmit={handleReviewSubmit}
           className="mb-10 flex flex-col gap-4 bg-base-300 dark:bg-gray-700 p-5 rounded-xl"
@@ -244,7 +258,7 @@ const PropertyDetails = () => {
                   </div>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300">
-                  {review.reviewText}
+                  {review.comment || review.reviewText || ""}
                 </p>
                 <p className="text-xs text-gray-500 mt-2">
                   {review.date
