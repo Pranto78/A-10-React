@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router";
 import { AuthContext } from "../Provider/AuthContext";
 import logo from "../assets/nest.png";
+import { IoMdLogIn } from "react-icons/io";
+import { FaUserPlus } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
@@ -42,183 +44,174 @@ const Navbar = () => {
     </>
   );
 
-  return (
-    <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50">
-      {/* Start */}
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </div>
-          <ul
-            tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+return (
+  <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50">
+    {/* Start */}
+    <div className="navbar-start">
+      {/* Mobile Dropdown */}
+      <div className="dropdown">
+        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            {links}
-
-            {/* 🌗 Theme Toggle (Mobile Only) */}
-            <li className="mt-3 text-center">
-              <div
-                onClick={toggleTheme}
-                className={`inline-flex items-center justify-center cursor-pointer transition-all duration-300 px-3 py-1 rounded-full border text-xs ${
-                  theme === "light"
-                    ? "bg-gray-200 border-gray-300 text-gray-800"
-                    : "bg-gray-900 border-gray-700 text-white"
-                }`}
-              >
-                {theme === "light" ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 4.354a8 8 0 110 15.292 8 8 0 010-15.292z"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M20 12.354A8 8 0 1111.646 4a8.001 8.001 0 008.354 8.354z"
-                    />
-                  </svg>
-                )}
-                <span>{theme === "light" ? "DAY" : "NIGHT"}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <NavLink
-          className="btn btn-ghost text-xl flex items-center gap-2"
-          to="/"
-        >
-          <img src={logo} className="h-[40px] w-[40px]" alt="Logo" />
-          Home <span className="text-yellow-600 font-bold">Nest</span>
-        </NavLink>
-      </div>
-
-      {/* Center */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
-      </div>
-
-      {/* End */}
-      <div className="navbar-end flex items-center gap-3">
-        {/* 🌗 Theme Toggle (Desktop Only) */}
-        <div
-          onClick={toggleTheme}
-          className={`hidden lg:flex items-center cursor-pointer transition-all duration-300 px-2 py-1 rounded-full border text-xs ${
-            theme === "light"
-              ? "bg-gray-200 border-gray-300 text-gray-800"
-              : "bg-gray-900 border-gray-700 text-white"
-          }`}
-        >
-          {theme === "light" ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 mr-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 4.354a8 8 0 110 15.292 8 8 0 010-15.292z"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 mr-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M20 12.354A8 8 0 1111.646 4a8.001 8.001 0 008.354 8.354z"
-              />
-            </svg>
-          )}
-          <span>{theme === "light" ? "DAY" : "NIGHT"}</span>
-        </div>
-
-        {/* User / Auth Buttons */}
-        {!user ? (
-          <>
-            <NavLink to="/login" className="btn btn-sm px-3 py-1">
-              Login
-            </NavLink>
-            <NavLink to="/registration" className="btn btn-sm px-3 py-1">
-              SignUp
-            </NavLink>
-          </>
-        ) : (
-          <div className="relative">
-            <img
-              src={
-                user?.photoURL
-                  ? user.photoURL
-                  : "https://via.placeholder.com/40"
-              }
-              alt={user?.displayName || "User"}
-              referrerPolicy="no-referrer"
-              className="h-10 w-10 rounded-full cursor-pointer object-cover border-2 border-gray-300 hover:border-purple-800 transition-all duration-300"
-              onClick={() => setDropdownOpen(!dropdownOpen)}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h8m-8 6h16"
             />
-            {dropdownOpen && (
-              <ul className="absolute right-0 mt-2 w-56 bg-base-100 border rounded-md shadow-lg p-2 z-50">
-                <li className="p-2 border-b">
-                  <p className="font-semibold">{user.displayName}</p>
-                  <p className="text-xs text-gray-500">{user.email}</p>
-                </li>
-                <li className="p-2">
-                  <button
-                    onClick={() => signOutUser()}
-                    className="btn btn-outline w-full"
-                  >
-                    Log Out
-                  </button>
-                </li>
-              </ul>
-            )}
-          </div>
+          </svg>
+        </div>
+
+        {/* Dropdown Menu (Mobile) */}
+        <ul
+          tabIndex="-1"
+          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+        >
+          {links}
+
+          {/* 🌙 Mobile Theme Toggle */}
+          <li className="mt-3">
+            <div
+              onClick={toggleTheme}
+              className="relative w-14 h-8 flex items-center bg-gray-400 dark:bg-gray-700 rounded-full p-1 cursor-pointer transition-colors duration-500 mx-auto"
+            >
+              <div
+                className={`absolute left-1 top-1 w-6 h-6 rounded-full bg-white transition-transform duration-500 ${
+                  theme === "dark" ? "translate-x-6" : ""
+                }`}
+              ></div>
+              {theme === "light" ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute left-2 w-4 h-4 text-yellow-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 15a5 5 0 100-10 5 5 0 000 10z" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute right-2 w-4 h-4 text-gray-200"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+              )}
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      {/* Logo */}
+      <NavLink className="btn btn-ghost text-xl flex items-center gap-2" to="/">
+        <img src={logo} className="h-[40px] w-[40px]" alt="Logo" />
+        Home <span className="text-purple-600 font-bold">Nest</span>
+      </NavLink>
+    </div>
+
+    {/* Center (Desktop links only) */}
+    <div className="navbar-center hidden lg:flex">
+      <ul className="menu menu-horizontal px-1">{links}</ul>
+    </div>
+
+    {/* End (Right side - Desktop & Mobile) */}
+    <div className="navbar-end flex items-center gap-3">
+      {/* 🌙 Desktop Theme Toggle (hidden on mobile) */}
+      <div
+        onClick={toggleTheme}
+        className="relative w-14 h-8 hidden lg:flex items-center bg-gray-400 dark:bg-gray-700 rounded-full p-1 cursor-pointer transition-colors duration-500"
+      >
+        <div
+          className={`absolute left-1 top-1 w-6 h-6 rounded-full bg-white transition-transform duration-500 ${
+            theme === "dark" ? "translate-x-6" : ""
+          }`}
+        ></div>
+        {theme === "light" ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute left-2 w-4 h-4 text-yellow-400"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 15a5 5 0 100-10 5 5 0 000 10z" />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute right-2 w-4 h-4 text-gray-200"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
         )}
       </div>
+
+      {/* 👤 User Section */}
+      {!user ? (
+        <>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `btn btn-sm px-3 py-1 rounded-full font-semibold border-none transition-all duration-300 flex items-center gap-1 ${
+                isActive
+                  ? "bg-gradient-to-r from-[#3498db] to-[#9b59b6] text-white"
+                  : "bg-gradient-to-r from-[#3498db] to-[#9b59b6] text-base-400"
+              }`
+            }
+          >
+            <IoMdLogIn size={20} /> Login
+          </NavLink>
+          <NavLink
+            to="/registration"
+            className="btn btn-sm px-4 py-1 rounded-full border border-[#3498db] text-[#3498db] font-medium 
+             bg-transparent transition-all duration-300
+             hover:text-white hover:bg-gradient-to-r hover:from-[#3498db] hover:to-[#9b59b6]"
+          >
+            <FaUserPlus size={20} />
+            SignUp
+          </NavLink>
+        </>
+      ) : (
+        <div className="relative">
+          <img
+            src={
+              user?.photoURL ? user.photoURL : "https://via.placeholder.com/40"
+            }
+            alt={user?.displayName || "User"}
+            referrerPolicy="no-referrer"
+            className="h-10 w-10 rounded-full cursor-pointer object-cover border-2 border-gray-300 hover:border-purple-800 transition-all duration-300"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          />
+          {dropdownOpen && (
+            <ul className="absolute right-0 mt-2 w-56 bg-base-100 border rounded-md shadow-lg p-2 z-50">
+              <li className="p-2 border-b">
+                <p className="font-semibold">{user.displayName}</p>
+                <p className="text-xs text-gray-500">{user.email}</p>
+              </li>
+              <li className="p-2">
+                <button
+                  onClick={() => signOutUser()}
+                  className="btn btn-outline w-full"
+                >
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          )}
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Navbar;

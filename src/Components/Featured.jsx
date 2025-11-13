@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FaMapMarkerAlt, FaTag } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import toast, { Toaster } from "react-hot-toast";
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,12 +11,17 @@ import { Autoplay } from "swiper/modules";
 // Swiper CSS
 import "swiper/css";
 
+// Auth Context
+import { AuthContext } from "../Provider/AuthContext";
+
 const cardVariants = {
   hover: { scale: 1.05, boxShadow: "0px 20px 30px rgba(0,0,0,0.3)" },
 };
 
 const Featured = () => {
   const [properties, setProperties] = useState([]);
+  const { user } = useContext(AuthContext); // Get logged-in user
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:4000/featured-properties")
@@ -25,9 +31,13 @@ const Featured = () => {
   }, []);
 
   return (
-    <div className="py-16 px-5 md:px-20 bg-base-100 transition duration-300">
-      <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">
-        Featured Properties
+    <div className="py-16 px-5 md:px-20 transition duration-300">
+      {/* Toast container */}
+      <Toaster position="top-right" />
+
+      <h2 className="text-3xl font-bold text-center mb-12 text-base-content">
+        <span className="text-blue-400">Featured</span>{" "}
+        <span className="font-bold text-purple-600">Properties</span>
       </h2>
 
       {properties.length === 0 ? (
@@ -81,7 +91,7 @@ const Featured = () => {
                   {/* Card body */}
                   <div className="card-body p-5 flex flex-col justify-between flex-1 min-h-[220px]">
                     <div className="flex flex-col gap-1">
-                      <h2 className="card-title text-lg font-semibold text-gray-900 dark:text-gray-100">
+                      <h2 className="card-title text-lg font-semibold text-base-content">
                         {property.name}
                       </h2>
 
@@ -103,12 +113,21 @@ const Featured = () => {
 
                     {/* View Details Button */}
                     <div className="card-actions justify-end mt-4">
-                      <NavLink
-                        to={`/propertyDetails/${property._id}`}
+                      <button
+                        onClick={() => {
+                          if (!user) {
+                            toast.error("Please login first to view details!");
+                            setTimeout(() => {
+                              navigate("/login");
+                            }, 1000); // wait 1 second before navigating
+                          } else {
+                            navigate(`/propertyDetails/${property._id}`);
+                          }
+                        }}
                         className="btn w-full text-white font-semibold bg-gradient-to-r from-[#3498db] to-[#9b59b6] border-none hover:opacity-90 transition-all duration-300"
                       >
                         View Details
-                      </NavLink>
+                      </button>
                     </div>
                   </div>
                 </motion.div>

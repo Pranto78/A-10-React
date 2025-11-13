@@ -31,21 +31,33 @@ const AllProperty = () => {
   );
 
   return (
-    <div className="py-20 px-5 md:px-16 bg-base-100 transition duration-300">
+    <div className="py-20 px-5 md:px-16 transition duration-300">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-          All Properties
+        <h2 className="text-3xl font-bold text-base-content">
+          <span className="text-blue-400">All</span>{" "}
+          <span className="text-purple-600">Properties</span>
         </h2>
 
         {/* Search Bar */}
-        <div className="relative w-full sm:w-64">
-          <FaSearch className="absolute top-3 left-3 text-gray-400" />
+        <div className="relative w-full sm:w-64 group">
+          <FaSearch className="absolute top-3 left-3 text-gray-400 group-hover:text-purple-300 transition-colors duration-300" />
+
           <input
             type="text"
             placeholder="Search by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-300 shadow-sm placeholder-gray-400"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-transparent
+               bg-gradient-to-r from-blue-700/40 via-purple-700/40 to-blue-800/40
+               dark:from-blue-900/60 dark:via-purple-900/60 dark:to-blue-900/60
+               text-base-400
+               placeholder-gray-400
+               focus:outline-none
+               focus:ring-2 focus:ring-purple-500 focus:border-transparent
+               shadow-[0_0_10px_rgba(59,130,246,0.15)]
+               hover:shadow-[0_0_15px_rgba(147,51,234,0.35)]
+               placeholder-gray-500 dark:placeholder-gray-400
+               transition-all duration-300"
           />
         </div>
       </div>
@@ -87,7 +99,7 @@ const AllProperty = () => {
               {/* Card Body */}
               <div className="card-body p-5 flex flex-col justify-between flex-1 min-h-[220px]">
                 <div className="flex flex-col gap-1">
-                  <h2 className="card-title text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  <h2 className="card-title text-lg font-semibold text-base-400">
                     {property.name}
                   </h2>
 

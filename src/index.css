@@ -17,3 +17,65 @@ a.active::after {
   background: linear-gradient(90deg, #3498db, #9b59b6);
   border-radius: 2px;
 }
+
+
+body {
+  transition: background 1s ease;
+  overflow-x: hidden;
+}
+
+/* 🌞 Light Theme */
+[data-theme="light"] {
+  background: #f9fafb;
+  color: #111827;
+}
+
+/* 🌙 Dark Theme */
+[data-theme="dark"] {
+  background: radial-gradient(circle at 50% 50%, #0a0a23, #000);
+  color: #e5e7eb;
+  position: relative;
+}
+
+/* ⭐ Star Layers (use pseudo-elements with transform GPU acceleration) */
+[data-theme="dark"]::before,
+[data-theme="dark"]::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.15;
+  z-index: -1;
+  transform: translateZ(0);
+  will-change: background-position;
+}
+
+/* Two layers moving differently for depth effect */
+[data-theme="dark"]::before {
+  animation: starsMove1 120s linear infinite;
+}
+[data-theme="dark"]::after {
+  animation: starsMove2 180s linear infinite;
+  opacity: 0.1;
+}
+
+/* 🌠 Slow, subtle movement */
+@keyframes starsMove1 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1000px 1000px;
+  }
+}
+@keyframes starsMove2 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -800px -800px;
+  }
+}
+

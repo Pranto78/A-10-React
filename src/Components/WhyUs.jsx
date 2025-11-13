@@ -31,10 +31,11 @@ const whyUsData = [
 
 const WhyUs = () => {
   return (
-    <div className="w-full py-16 bg-base-200">
+    <div className="w-full py-16">
       <div className="w-11/12 mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-base-content mb-12">
-          Why Choose Home<span className="text-yellow-600 font-bold">Nest</span>?
+          <span className="text-blue-400">Why Choose Home</span>
+          <span className="text-purple-600 font-bold">Nest</span>?
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -69,9 +69,10 @@ useEffect(() => {
   }
 
   return (
-    <div className="px-5 md:px-20 py-16 bg-base-100 dark:bg-gray-900 transition duration-300">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-10">
-        My Ratings & Reviews
+    <div className="px-5 md:px-20 py-16 transition duration-300">
+      <h1 className="text-3xl font-bold text-base-content mb-10">
+        <span className="text-purple-600">My Ratings</span> <span className="text-blue-400">&</span>{" "}
+        <span className="text-purple-600">Reviews</span>
       </h1>
 
       {myReviews.length === 0 ? (
@@ -92,10 +93,11 @@ useEffect(() => {
             const category = property.category || "Unknown";
             const location = property.location || "Unknown";
 
-          const reviewerName = review.reviewerName || "Anonymous";
-          const reviewerPhoto =
-            review.reviewerPhoto || "https://via.placeholder.com/80?text=User";
-          const reviewerEmail = review.reviewerEmail || "";
+            const reviewerName = review.reviewerName || "Anonymous";
+            const reviewerPhoto =
+              review.reviewerPhoto ||
+              "https://via.placeholder.com/80?text=User";
+            const reviewerEmail = review.reviewerEmail || "";
 
             return (
               <motion.div
@@ -120,16 +122,18 @@ useEffect(() => {
                         className="w-12 h-12 rounded-full object-cover"
                       />
                       <div>
-                        <div className="font-semibold text-gray-900 dark:text-gray-100">
-                          {reviewerName}
+                        <div className="font-semibold text-base-400">
+                          <span className="text-purple-600">
+                            {reviewerName}
+                          </span>
                         </div>
-                        <div className="text-xs text-gray-500">
-                          {reviewerEmail || ""}
+                        <div className="text-xs text-gray-400">
+                          <span className="text-blue-400">{reviewerEmail || ""}</span>
                         </div>
                       </div>
                     </div>
 
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                    <h2 className="text-xl font-semibold text-base-400">
                       {propName}
                     </h2>
                     <div className="flex flex-wrap gap-3 text-gray-600 dark:text-gray-300 text-sm mb-2">
@@ -140,9 +144,7 @@ useEffect(() => {
                         <FaMapMarkerAlt className="text-error" /> {location}
                       </span>
                     </div>
-                    <p className="text-gray-700 dark:text-gray-300">
-                      {review.comment}
-                    </p>
+                    <p className="text-base-500">{review.comment}</p>
                   </div>
 
                   <div className="mt-3 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">

@@ -84,10 +84,10 @@ const MyProperty = () => {
   }
 
   return (
-    <div className="px-6 md:px-20 py-16 bg-base-100 dark:bg-gray-900 min-h-screen">
+    <div className="px-6 md:px-20 py-16  min-h-screen">
       <Toaster position="top-right" />
-      <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100 text-center">
-        My Properties
+      <h1 className="text-3xl font-bold mb-8 text-base-content text-center">
+        <span className="text-blue-400">My</span> <span className="text-purple-600">Properties</span>
       </h1>
 
       {properties.length === 0 ? (
@@ -109,7 +109,7 @@ const MyProperty = () => {
                 />
               </figure>
               <div className="card-body">
-                <h2 className="card-title text-gray-900 dark:text-gray-100">
+                <h2 className="card-title text-base-400">
                   {property.name}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300">
