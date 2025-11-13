@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Create a new user (no profile yet)
+  // ✅ Create new user
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  // ✅ Update profile and immediately reflect it in state
+  // ✅ Update name & photo and refresh immediately
   const updateUserProfile = async (name, photoURL) => {
     if (!auth.currentUser) throw new Error("No user logged in");
 
@@ -50,25 +50,38 @@ const AuthProvider = ({ children }) => {
       photoURL: photoURL,
     });
 
-    // 🔥 Force refresh the current user object
-    const updatedUser = {
-      ...auth.currentUser,
-      displayName: name,
-      photoURL: photoURL,
-    };
-    setUser(updatedUser);
+    // 🔥 Force reload user to get fresh profile info
+    await auth.currentUser.reload();
+
+    const refreshedUser = auth.currentUser;
+    setUser({
+      uid: refreshedUser.uid,
+      email: refreshedUser.email,
+      displayName: refreshedUser.displayName,
+      photoURL: refreshedUser.photoURL,
+    });
   };
 
-  // ✅ Listen to auth state changes
+  // ✅ Listen to Firebase auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (currentUser) {
+        setUser({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+        });
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
-  // ✅ Provide everything to context
+  // ✅ Provide context
   const authInfo = {
     createUser,
     signInUser,

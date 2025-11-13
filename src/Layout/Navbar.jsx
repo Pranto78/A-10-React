@@ -8,6 +8,8 @@ const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  console.log("User in Navbar:", user);
+
   // Apply theme
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -24,7 +26,6 @@ const Navbar = () => {
       <li>
         <NavLink to="/allProperties">All Properties</NavLink>
       </li>
-      {/* ✅ Private Links — only visible when logged in */}
       {user && (
         <>
           <li>
@@ -67,8 +68,54 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {links}
+
+            {/* 🌗 Theme Toggle (Mobile Only) */}
+            <li className="mt-3 text-center">
+              <div
+                onClick={toggleTheme}
+                className={`inline-flex items-center justify-center cursor-pointer transition-all duration-300 px-3 py-1 rounded-full border text-xs ${
+                  theme === "light"
+                    ? "bg-gray-200 border-gray-300 text-gray-800"
+                    : "bg-gray-900 border-gray-700 text-white"
+                }`}
+              >
+                {theme === "light" ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 4.354a8 8 0 110 15.292 8 8 0 010-15.292z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M20 12.354A8 8 0 1111.646 4a8.001 8.001 0 008.354 8.354z"
+                    />
+                  </svg>
+                )}
+                <span>{theme === "light" ? "DAY" : "NIGHT"}</span>
+              </div>
+            </li>
           </ul>
         </div>
+
         <NavLink
           className="btn btn-ghost text-xl flex items-center gap-2"
           to="/"
@@ -85,10 +132,10 @@ const Navbar = () => {
 
       {/* End */}
       <div className="navbar-end flex items-center gap-3">
-        {/* Theme Toggle */}
+        {/* 🌗 Theme Toggle (Desktop Only) */}
         <div
           onClick={toggleTheme}
-          className={`flex items-center cursor-pointer transition-all duration-300 px-2 py-1 rounded-full border text-xs ${
+          className={`hidden lg:flex items-center cursor-pointer transition-all duration-300 px-2 py-1 rounded-full border text-xs ${
             theme === "light"
               ? "bg-gray-200 border-gray-300 text-gray-800"
               : "bg-gray-900 border-gray-700 text-white"
@@ -141,9 +188,14 @@ const Navbar = () => {
         ) : (
           <div className="relative">
             <img
-              src={user.photoURL || "https://via.placeholder.com/40"}
-              alt="User"
-              className="h-10 w-10 rounded-full cursor-pointer"
+              src={
+                user?.photoURL
+                  ? user.photoURL
+                  : "https://via.placeholder.com/40"
+              }
+              alt={user?.displayName || "User"}
+              referrerPolicy="no-referrer"
+              className="h-10 w-10 rounded-full cursor-pointer object-cover border-2 border-gray-300 hover:border-purple-800 transition-all duration-300"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
             {dropdownOpen && (
