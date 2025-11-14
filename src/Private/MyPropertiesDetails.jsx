@@ -103,7 +103,7 @@ const MyPropertiesDetails = () => {
     : "N/A";
 
   return (
-    <div className="px-5 md:px-20 py-16 bg-base-100 dark:bg-gray-900 transition duration-300">
+    <div className="px-5 md:px-20 py-16 transition duration-300">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -127,7 +127,7 @@ const MyPropertiesDetails = () => {
         </div>
 
         <div className="p-8 space-y-4">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          <h1 className="text-3xl font-bold text-base-400">
             {name}
           </h1>
           <div className="flex flex-wrap gap-3 text-gray-600 dark:text-gray-300">
@@ -165,7 +165,7 @@ const MyPropertiesDetails = () => {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-4xl mx-auto mt-16 bg-base-200 dark:bg-gray-800 rounded-2xl shadow-lg p-8"
       >
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+        <h2 className="text-2xl font-bold mb-6 text-base-400">
           Ratings & Reviews
         </h2>
 
@@ -173,7 +173,7 @@ const MyPropertiesDetails = () => {
           onSubmit={handleReviewSubmit}
           className="mb-10 flex flex-col gap-4 bg-base-300 dark:bg-gray-700 p-5 rounded-xl"
         >
-          <label className="font-semibold text-gray-800 dark:text-gray-100">
+          <label className="font-semibold text-base-400">
             {" "}
             Your Rating:{" "}
           </label>
