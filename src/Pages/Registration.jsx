@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../Provider/AuthContext";
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const Register = () => {
   const { createUser, signInWithGoogle, updateUserProfile } =
     useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -17,18 +20,26 @@ const Register = () => {
 
     createUser(email, password)
       .then(() => updateUserProfile(name, photoURL))
-      .then(() => console.log("✅ Profile updated successfully!"))
-      .catch((error) => console.log(error));
+      .then(() => {
+        toast.success("Registration successful!", { duration: 2000 });
+        setTimeout(() => navigate("/login"), 2000);
+      })
+      .catch((error) => toast.error(error.message));
   };
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-      .then((result) => console.log("Google Login:", result.user))
-      .catch((error) => console.log(error));
+      .then(() => {
+        toast.success("Google registration successful!", { duration: 1000 });
+        setTimeout(() => navigate("/"), 1000);
+      })
+      .catch((error) => toast.error(error.message));
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
+      <Toaster position="top-center" />
+
       <div className="card bg-base-300 w-full max-w-sm shadow-2xl rounded-2xl p-6">
         <h1 className="text-3xl font-bold text-center mb-6 text-base-400">
           Register

@@ -24,7 +24,7 @@ const Featured = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:4000/featured-properties")
+    fetch("https://a-10-server-one.vercel.app/featured-properties")
       .then((res) => res.json())
       .then((data) => setProperties(data))
       .catch((error) => console.error(error));
@@ -42,7 +42,7 @@ const Featured = () => {
 
       {properties.length === 0 ? (
         <div className="text-center text-gray-500 dark:text-gray-400">
-          Loading properties...
+          <span className="loading loading-spinner text-primary"></span>
         </div>
       ) : (
         <>

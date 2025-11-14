@@ -19,7 +19,7 @@ const AllProperty = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:4000/all-properties")
+    fetch("https://a-10-server-one.vercel.app/all-properties")
       .then((res) => res.json())
       .then((data) => setProperties(data))
       .catch((err) => console.error("Error fetching properties:", err));
@@ -64,9 +64,11 @@ const AllProperty = () => {
 
       {filteredProperties.length === 0 ? (
         <div className="text-center text-gray-500 dark:text-gray-400">
-          {properties.length === 0
-            ? "Loading properties..."
-            : "No properties found."}
+          {properties.length === 0 ? (
+            <span className="loading loading-spinner text-primary"></span>
+          ) : (
+            "No properties found."
+          )}
         </div>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

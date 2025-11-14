@@ -20,13 +20,13 @@ const PropertyDetails = () => {
     if (!id) return;
 
     // Fetch property details
-    fetch(`http://localhost:4000/properties/${id}`)
+    fetch(`https://a-10-server-one.vercel.app/properties/${id}`)
       .then((res) => res.json())
       .then((data) => setProperty(data))
       .catch((err) => console.error("Error fetching property:", err));
 
     // Fetch reviews
-    fetch(`http://localhost:4000/reviews?propertyId=${id}`)
+    fetch(`https://a-10-server-one.vercel.app/reviews?propertyId=${id}`)
       .then((res) => res.json())
       .then((data) => setReviews(data))
       .catch((err) => console.error("Error fetching reviews:", err));
@@ -51,7 +51,7 @@ const PropertyDetails = () => {
       date: new Date().toISOString(),
     };
 
-    fetch("http://localhost:4000/reviews", {
+    fetch("https://a-10-server-one.vercel.app/reviews", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newReview),

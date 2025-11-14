@@ -23,21 +23,31 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink className="text-base-400 font-bold" to="/">
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/allProperties">All Properties</NavLink>
+        <NavLink className="text-base-400 font-bold" to="/allProperties">
+          All Properties
+        </NavLink>
       </li>
       {user && (
         <>
           <li>
-            <NavLink to="/addProperty">Add Property</NavLink>
+            <NavLink className="text-base-400 font-bold" to="/addProperty">
+              Add Property
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/myProperties">My Properties</NavLink>
+            <NavLink className="text-base-400 font-bold" to="/myProperties">
+              My Properties
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/myRatings">My Ratings</NavLink>
+            <NavLink className="text-base-400 font-bold" to="/myRatings">
+              My Ratings
+            </NavLink>
           </li>
         </>
       )}
@@ -45,7 +55,14 @@ const Navbar = () => {
   );
 
 return (
-  <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50">
+  <div
+    className={`navbar shadow-sm fixed top-0 left-0 w-full z-50 transition-all duration-500
+    ${
+      theme === "light"
+        ? "bg-gradient-to-r from-[#3498db] to-[#9b59b6]"
+        : "bg-transparent"
+    }`}
+  >
     {/* Start */}
     <div className="navbar-start">
       {/* Mobile Dropdown */}
@@ -70,7 +87,11 @@ return (
         {/* Dropdown Menu (Mobile) */}
         <ul
           tabIndex="-1"
-          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+          className={`menu menu-sm dropdown-content rounded-box z-10 mt-3 w-52 p-2 transition-all duration-300 ${
+            theme === "light"
+              ? "bg-base-100 text-base-content shadow-none"
+              : "bg-base-100 text-base-content shadow-lg"
+          }`}
         >
           {links}
 
@@ -110,7 +131,10 @@ return (
       </div>
 
       {/* Logo */}
-      <NavLink className="btn btn-ghost text-xl flex items-center gap-2" to="/">
+      <NavLink
+        className="btn btn-ghost lg:text-xl flex items-center gap-2"
+        to="/"
+      >
         <img src={logo} className="h-[40px] w-[40px]" alt="Logo" />
         Home <span className="text-purple-600 font-bold">Nest</span>
       </NavLink>
@@ -160,7 +184,7 @@ return (
           <NavLink
             to="/login"
             className={({ isActive }) =>
-              `btn btn-sm px-3 py-1 rounded-full font-semibold border-none transition-all duration-300 flex items-center gap-1 ${
+              `btn btn-sm px-3 py-1 text-base-400  rounded-full font-bold border-none transition-all duration-300 flex items-center gap-1 ${
                 isActive
                   ? "bg-gradient-to-r from-[#3498db] to-[#9b59b6] text-white"
                   : "bg-gradient-to-r from-[#3498db] to-[#9b59b6] text-base-400"
@@ -171,7 +195,7 @@ return (
           </NavLink>
           <NavLink
             to="/registration"
-            className="btn btn-sm px-4 py-1 rounded-full border border-[#3498db] text-[#3498db] font-medium 
+            className="btn btn-sm px-4 py-1 text-base-400 rounded-full border border-[#3498db]  font-medium 
              bg-transparent transition-all duration-300
              hover:text-white hover:bg-gradient-to-r hover:from-[#3498db] hover:to-[#9b59b6]"
           >
@@ -191,15 +215,20 @@ return (
             onClick={() => setDropdownOpen(!dropdownOpen)}
           />
           {dropdownOpen && (
-            <ul className="absolute right-0 mt-2 w-56 bg-base-100 border rounded-md shadow-lg p-2 z-50">
-              <li className="p-2 border-b">
-                <p className="font-semibold">{user.displayName}</p>
+            <ul className="absolute right-0 mt-2 w-56 bg-base-300 border rounded-xl shadow-xl p-3 z-50 transition-all duration-300">
+              <li className="p-3 border-b">
+                <p className="font-semibold text-base-400">
+                  {user.displayName}
+                </p>
                 <p className="text-xs text-gray-500">{user.email}</p>
               </li>
+
               <li className="p-2">
                 <button
                   onClick={() => signOutUser()}
-                  className="btn btn-outline w-full"
+                  className="w-full py-2 rounded-lg font-semibold text-white
+             bg-gradient-to-r from-[#3498db] to-[#9b59b6]
+             transition-all duration-300 hover:opacity-90 hover:shadow-lg"
                 >
                   Log Out
                 </button>

@@ -7,55 +7,55 @@ const MyRatings = () => {
   const { user, loading } = useContext(AuthContext);
   const [myReviews, setMyReviews] = useState([]);
 
-useEffect(() => {
-  const fetchReviewsWithProperties = async () => {
-    if (!user) return; // wait until user is loaded
-    try {
-      const res = await fetch(
-        `http://localhost:4000/reviews/with-property?userId=${user.uid}`
-      );
-      const data = await res.json();
-      const reviews = Array.isArray(data) ? data : [];
+  useEffect(() => {
+    const fetchReviewsWithProperties = async () => {
+      if (!user) return; // wait until user is loaded
+      try {
+        const res = await fetch(
+          `https://a-10-server-one.vercel.app/reviews/with-property?userId=${user.uid}`
+        );
+        const data = await res.json();
+        const reviews = Array.isArray(data) ? data : [];
 
-      // Fetch property details if needed
-      const reviewsWithProps = await Promise.all(
-        reviews.map(async (review) => {
-          if (review.property && review.property.name) return review;
+        // Fetch property details if needed
+        const reviewsWithProps = await Promise.all(
+          reviews.map(async (review) => {
+            if (review.property && review.property.name) return review;
 
-          if (review.propertyId) {
-            try {
-              const propRes = await fetch(
-                `http://localhost:4000/properties/${review.propertyId}`
-              );
-              if (!propRes.ok) throw new Error("Property not found");
-              const propData = await propRes.json();
-              return { ...review, property: propData };
-            } catch (err) {
-              console.warn(
-                `Error fetching property ${review.propertyId}:`,
-                err
-              );
-              return { ...review, property: null };
+            if (review.propertyId) {
+              try {
+                const propRes = await fetch(
+                  `https://a-10-server-one.vercel.app/properties/${review.propertyId}`
+                );
+                if (!propRes.ok) throw new Error("Property not found");
+                const propData = await propRes.json();
+                return { ...review, property: propData };
+              } catch (err) {
+                console.warn(
+                  `Error fetching property ${review.propertyId}:`,
+                  err
+                );
+                return { ...review, property: null };
+              }
             }
-          }
 
-          return { ...review, property: null };
-        })
-      );
+            return { ...review, property: null };
+          })
+        );
 
-      setMyReviews(reviewsWithProps);
-    } catch (err) {
-      console.error("Error fetching reviews:", err);
-    }
-  };
+        setMyReviews(reviewsWithProps);
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+      }
+    };
 
-  fetchReviewsWithProperties();
-}, [user]);
+    fetchReviewsWithProperties();
+  }, [user]);
 
   if (loading) {
     return (
       <div className="text-center py-20 text-gray-500 dark:text-gray-400">
-        Loading your reviews...
+        <span className="loading loading-spinner text-primary"></span>
       </div>
     );
   }
@@ -71,7 +71,8 @@ useEffect(() => {
   return (
     <div className="px-5 md:px-20 py-16 transition duration-300">
       <h1 className="text-3xl font-bold text-base-content mb-10">
-        <span className="text-purple-600">My Ratings</span> <span className="text-blue-400">&</span>{" "}
+        <span className="text-purple-600">My Ratings</span>{" "}
+        <span className="text-blue-400">&</span>{" "}
         <span className="text-purple-600">Reviews</span>
       </h1>
 
@@ -128,7 +129,9 @@ useEffect(() => {
                           </span>
                         </div>
                         <div className="text-xs text-gray-400">
-                          <span className="text-blue-400">{reviewerEmail || ""}</span>
+                          <span className="text-blue-400">
+                            {reviewerEmail || ""}
+                          </span>
                         </div>
                       </div>
                     </div>

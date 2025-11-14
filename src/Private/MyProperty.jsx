@@ -15,11 +15,15 @@ const MyProperty = () => {
     if (!user?.email) return;
     const fetchMyProperties = async () => {
       try {
-        const res = await fetch("http://localhost:4000/getMyProperty");
+       const res = await fetch(
+         `https://a-10-server-one.vercel.app/getMyProperty?email=${user.email}`
+       );
         const data = await res.json();
 
         // Filter only logged-in user's properties
-        const userProps = data.filter((item) => item.userEmail === user.email);
+        const userProps = data.filter(
+          (item) => item.postedEmail === user.email
+        );
         setProperties(userProps);
       } catch (error) {
         console.error(error);
@@ -44,9 +48,12 @@ const MyProperty = () => {
 
     if (confirm.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:4000/properties/${id}`, {
-          method: "DELETE",
-        });
+        const res = await fetch(
+          `https://a-10-server-one.vercel.app/properties/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
         const result = await res.json();
 
         if (result.deletedCount > 0) {
@@ -78,7 +85,7 @@ const MyProperty = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen text-xl font-semibold dark:text-gray-200">
-        Loading your properties...
+        <span className="loading loading-spinner text-primary"></span>
       </div>
     );
   }
@@ -87,7 +94,8 @@ const MyProperty = () => {
     <div className="px-6 md:px-20 py-16  min-h-screen">
       <Toaster position="top-right" />
       <h1 className="text-3xl font-bold mb-8 text-base-content text-center">
-        <span className="text-blue-400">My</span> <span className="text-purple-600">Properties</span>
+        <span className="text-blue-400">My</span>{" "}
+        <span className="text-purple-600">Properties</span>
       </h1>
 
       {properties.length === 0 ? (
@@ -109,9 +117,7 @@ const MyProperty = () => {
                 />
               </figure>
               <div className="card-body">
-                <h2 className="card-title text-base-400">
-                  {property.name}
-                </h2>
+                <h2 className="card-title text-base-400">{property.name}</h2>
                 <p className="text-gray-600 dark:text-gray-300">
                   <strong>Category:</strong> {property.category}
                 </p>

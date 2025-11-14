@@ -20,6 +20,7 @@ import MyProperty from "./Private/MyProperty.jsx";
 import MyRatings from "./Private/MyRatings.jsx";
 import Update from "./Private/Update.jsx";
 import MyPropertiesDetails from "./Private/MyPropertiesDetails.jsx";
+import PartnerShip from "./Components/PartnerShip.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
             <Home />
             <Featured />
             <WhyUs />
+            <PartnerShip></PartnerShip>
           </>
         ),
       },
@@ -41,13 +43,13 @@ const router = createBrowserRouter([
         path: "propertyDetails/:id",
         element: (
           <PrivateRoute>
-            <PropertyDetails />,
+            <PropertyDetails />
           </PrivateRoute>
         ),
       },
       {
         path: "allProperties",
-        element: <AllProperty></AllProperty>,
+        element: <AllProperty></AllProperty>
       },
       {
         path: "login",
@@ -55,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: "registration",
-        element: <Registration></Registration>,
+        element: <Registration></Registration>
       },
       {
         path: "addProperty",
@@ -104,7 +106,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />,
+      <RouterProvider router={router} />
     </AuthProvider>
   </StrictMode>
 );

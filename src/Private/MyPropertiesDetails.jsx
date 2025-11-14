@@ -21,7 +21,7 @@ const MyPropertiesDetails = () => {
     if (!id) return;
 
     // fetch properties list and find by id
-    fetch("http://localhost:4000/getMyProperty")
+    fetch("https://a-10-server-one.vercel.app/getMyProperty")
       .then((res) => res.json())
       .then((data) => {
         const found = Array.isArray(data)
@@ -32,7 +32,7 @@ const MyPropertiesDetails = () => {
       .catch((err) => console.error("Error fetching property:", err));
 
     // fetch reviews for this property (note backticks)
-    fetch(`http://localhost:4000/reviews?propertyId=${id}`)
+    fetch(`https://a-10-server-one.vercel.app/reviews?propertyId=${id}`)
       .then((res) => res.json())
       .then((data) => setReviews(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error fetching reviews:", err));
@@ -54,7 +54,7 @@ const MyPropertiesDetails = () => {
       date: new Date().toISOString(),
     };
 
-    fetch("http://localhost:4000/reviews", {
+    fetch("https://a-10-server-one.vercel.app/reviews", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newReview),

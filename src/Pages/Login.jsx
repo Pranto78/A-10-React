@@ -1,11 +1,14 @@
 import React, { useState, useContext } from "react";
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
-import { AuthContext } from "../Provider/AuthContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../Provider/AuthContext";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -14,25 +17,35 @@ const Login = () => {
 
     signInUser(email, password)
       .then((result) => {
-        console.log("User Logged In:", result.user);
+        toast.success("Login successful!", { duration: 2000 });
+        setTimeout(() => navigate("/"), 2000);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log("Google Login:", result.user);
+        toast.success("Google login successful!", { duration: 2000 });
+        setTimeout(() => navigate("/"), 2000);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (
     <div className="hero min-h-screen">
+      <Toaster position="top-center" />
+
       <div className="hero-content flex-col lg:flex-row-reverse gap-10">
         {/* Info Section */}
         <div className="text-center lg:text-left text-white">
-          <h1 className="text-5xl text-base-content font-bold mb-4">Login now!</h1>
+          <h1 className="text-5xl text-base-content font-bold mb-4">
+            Login now!
+          </h1>
           <p className="text-lg text-base-content">
             Welcome back! Login with your credentials or use Google for a quick
             login.

@@ -23,7 +23,9 @@ const Update = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/properties/${id}`);
+        const res = await fetch(
+          `https://a-10-server-one.vercel.app/properties/${id}`
+        );
         const data = await res.json();
         setPropertyData({
           name: data.name || "",
@@ -68,11 +70,14 @@ const Update = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:4000/properties/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedProperty),
-      });
+      const res = await fetch(
+        `https://a-10-server-one.vercel.app/properties/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedProperty),
+        }
+      );
       const data = await res.json();
       if (data.modifiedCount > 0 || data.acknowledged) {
         toast.success("Property updated successfully!");
@@ -97,10 +102,10 @@ const Update = () => {
   }
 
   return (
-    <div className="px-4 md:px-20 py-16 bg-base-100 dark:bg-gray-900 min-h-screen">
+    <div className="px-4 md:px-20 py-16 min-h-screen">
       <Toaster position="top-right" reverseOrder={false} />
-      <h1 className="text-3xl md:text-4xl font-bold mb-10 text-gray-900 dark:text-gray-100 text-center">
-        Update Property
+      <h1 className="text-3xl md:text-4xl font-bold mb-10 text-base-400 text-center">
+        <span className="text-blue-400">Update</span> <span className="text-purple-600">Property</span>
       </h1>
 
       <form
