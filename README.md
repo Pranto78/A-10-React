@@ -69,11 +69,11 @@ Node.js, Express.js, MongoDB (Atlas), CORS, dotenv, Vercel Serverless Functions
 ## 📷 Screenshots
 
 <p align="center">
-  <img src="" width="80%" alt="Home Page Screenshot"/>
+  <img src="https://github.com/Pranto78/A-10-React/blob/main/Screenshot%202025-11-19%20003228.png" width="80%" alt="Home Page Screenshot"/>
 </p>
 
 <p align="center">
-  <img src="" width="80%" alt="Property Details Screenshot"/>
+  <img src="https://github.com/Pranto78/A-10-React/blob/main/Screenshot%202025-11-19%20003302.png" width="80%" alt="Property Details Screenshot"/>
 </p>
 
 ---
