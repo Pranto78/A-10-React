@@ -33,9 +33,8 @@ const AllProperty = () => {
   return (
     <div className="py-20 px-5 md:px-16 transition duration-300">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <h2 className="text-3xl font-bold text-base-content">
-          <span className="text-blue-400">All</span>{" "}
-          <span className="text-purple-600">Properties</span>
+        <h2 className="text-3xl font-bold gradient-text">
+          All Properties
         </h2>
 
         {/* Search Bar */}

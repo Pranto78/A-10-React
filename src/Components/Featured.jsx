@@ -35,9 +35,8 @@ const Featured = () => {
       {/* Toast container */}
       <Toaster position="top-right" />
 
-      <h2 className="text-3xl font-bold text-center mb-12 text-base-content">
-        <span className="text-blue-400">Featured</span>{" "}
-        <span className="font-bold text-purple-600">Properties</span>
+      <h2 className="text-3xl font-bold text-center mb-12 gradient-text whitespace-nowrap cursor-pointer">
+        Feature Properties
       </h2>
 
       {properties.length === 0 ? (

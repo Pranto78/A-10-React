@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+*{
+  font-family: "Merriweather", serif;
+}
+
 a.active {
   position: relative;
   /* color: #3498db; */

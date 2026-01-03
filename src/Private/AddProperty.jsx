@@ -74,9 +74,8 @@ const AddProperty = () => {
   return (
     <div className="px-4 md:px-20 py-16 min-h-screen">
       <Toaster position="top-right" reverseOrder={false} />
-      <h1 className="text-3xl md:text-4xl font-bold mb-10 text-base-content text-center">
-        <span className="text-blue-400">Add New</span>{" "}
-        <span className="text-purple-600">Property</span>
+      <h1 className="text-3xl md:text-4xl font-bold mb-10 gradient-text text-center ">
+        Add New Properties
       </h1>
 
       <form

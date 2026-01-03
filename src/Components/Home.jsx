@@ -5,6 +5,8 @@ import h1 from "../assets/House1.jpg";
 import h2 from "../assets/house2.jpg";
 import h3 from "../assets/House3.jpg";
 import h4 from "../assets/house4.jpg";
+import { Link } from "react-router";
+import { FaLocationArrow } from "react-icons/fa";
 
 const images = [
   { src: h1, title: "Modern Family Home", desc: "Luxury living with comfort" },
@@ -68,12 +70,21 @@ const Home = () => {
       {/* Text Container */}
       <div className="w-full md:w-1/3 flex items-center justify-center p-10 bg-gray-100">
         <div className="text-center md:text-left">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-4">
             Welcome home
           </h1>
           <p className="text-xl md:text-2xl text-gray-700">
             It feels like home again
           </p>
+
+          <Link
+            to={"/allProperties"}
+            className="btn px-8 py-3 gradient-bg w-1/2 mt-5 rounded-b-2xl font-bold border-none
+             transition-all duration-300 ease-out
+             hover:scale-105 hover:shadow-xl hover:shadow-blue-500/40 hover:brightness-110"
+          >
+            Let's Go <FaLocationArrow size={20} />
+          </Link>
         </div>
       </div>
     </div>

@@ -70,10 +70,8 @@ const MyRatings = () => {
 
   return (
     <div className="px-5 md:px-20 py-16 transition duration-300">
-      <h1 className="text-3xl font-bold text-base-content mb-10">
-        <span className="text-purple-600">My Ratings</span>{" "}
-        <span className="text-blue-400">&</span>{" "}
-        <span className="text-purple-600">Reviews</span>
+      <h1 className="text-3xl font-bold gradient-text mb-10">
+        My Ratings & Reviews
       </h1>
 
       {myReviews.length === 0 ? (

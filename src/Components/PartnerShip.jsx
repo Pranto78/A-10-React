@@ -16,9 +16,8 @@ const PartnerShip = () => {
 
   return (
     <div className="w-full py-16">
-      <h2 className="text-center text-3xl font-bold mb-10 text-base-content">
-        <span className="text-blue-400">Our Trusted</span>{" "}
-        <span className="text-purple-600">Partners</span>
+      <h2 className="text-center text-3xl font-bold mb-10 gradient-text whitespace-nowrap cursor-pointer">
+        Our Trusted Partners
       </h2>
 
       <div className="max-w-7xl mx-auto px-5">

@@ -4,7 +4,7 @@ import { AuthContext } from "../Provider/AuthContext";
 import logo from "../assets/nest.png";
 
 // Icons
-import { IoMdLogIn } from "react-icons/io";
+import { IoMdLogIn, IoMdLogOut } from "react-icons/io";
 import { FaHome, FaHouseUser, FaUserPlus } from "react-icons/fa";
 import { BsFillHouseAddFill, BsHousesFill } from "react-icons/bs";
 import { MdOutlineStarRate } from "react-icons/md";
@@ -126,8 +126,8 @@ const Navbar = () => {
           {/* Logo */}
           <NavLink to="/" className="flex items-center gap-2">
             <img src={logo} className="h-[40px] w-[40px]" alt="Logo" />
-            <span className="font-bold  text-lg sm:text-xl whitespace-nowrap gradient-text-hover">
-              Home <span className="text-purple-500">Nest</span>
+            <span className="font-bold  text-lg sm:text-xl gradient-text whitespace-nowrap">
+              Home Nest
             </span>
           </NavLink>
         </div>
@@ -178,17 +178,20 @@ const Navbar = () => {
               />
 
               {dropdownOpen && (
-                <ul className="absolute right-0 mt-3 w-56 bg-base-200 dark:bg-base-300 rounded-xl shadow-xl p-3">
+                <ul className="absolute right-0 mt-3 w-56 bg-transparent dark:bg-base-300 rounded-xl shadow-xl p-3">
                   <li className="border-b p-3">
-                    <p className="font-bold ">{user.displayName}</p>
-                    <p className="text-xs opacity-60">{user.email}</p>
+                    <p className="font-bold text-black">{user.displayName}</p>
+                    <p className="text-xs opacity-60 text-gray-700">
+                      {user.email}
+                    </p>
                   </li>
                   <li className="p-2">
                     <button
                       onClick={signOutUser}
-                      className="w-full gradient-bg text-white py-2 rounded-lg"
+                      className="flex justify-center gap-2 items-center w-full gradient-bg text-white py-2 rounded-lg"
                     >
-                      Log Out
+                      <IoMdLogOut size={20} />
+                      <h1>Log Out</h1>
                     </button>
                   </li>
                 </ul>
@@ -284,7 +287,10 @@ const Navbar = () => {
           {/* Login / Signup */}
           {!user && (
             <div className="flex flex-col gap-4 mt-10 w-full">
-              <NavLink className="btn gradient-bg rounded-2xl text-white" to="/login">
+              <NavLink
+                className="btn gradient-bg rounded-2xl text-white"
+                to="/login"
+              >
                 <IoMdLogIn size={20} />
                 Login
               </NavLink>
@@ -292,7 +298,8 @@ const Navbar = () => {
                 className="btn border rounded-2xl hover:gradient-bg"
                 to="/registration"
               >
-                <FaUserPlus size={20}/>Sign Up
+                <FaUserPlus size={20} />
+                Sign Up
               </NavLink>
             </div>
           )}
