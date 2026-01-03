@@ -105,7 +105,7 @@ const MyRatings = () => {
                 key={review._id || index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col sm:flex-row gap-5 bg-base-200 dark:bg-gray-800 rounded-2xl shadow-lg p-5"
+                className="flex flex-col sm:flex-row gap-5 bg-transparent border border-base-300 dark:bg-gray-800 rounded-2xl shadow-lg p-5"
               >
                 <img
                   src={image}

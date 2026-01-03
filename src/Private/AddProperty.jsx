@@ -81,7 +81,7 @@ const AddProperty = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-3xl mx-auto bg-base-200 dark:bg-gray-800 p-8 md:p-12 rounded-3xl shadow-xl space-y-6"
+        className="max-w-3xl mx-auto bg-transparent border border-base-300 dark:bg-gray-800 p-8 md:p-12 rounded-3xl shadow-xl space-y-6"
       >
         {/* Property Name */}
         <div className="flex flex-col">

@@ -13,16 +13,13 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const photoURL = e.target.photoURL.value;
-    const password = e.target.password.value;
+    const { name, email, photoURL, password } = e.target;
 
-    createUser(email, password)
-      .then(() => updateUserProfile(name, photoURL))
+    createUser(email.value, password.value)
+      .then(() => updateUserProfile(name.value, photoURL.value))
       .then(() => {
-        toast.success("Registration successful!", { duration: 2000 });
-        setTimeout(() => navigate("/login"), 2000);
+        toast.success("✨ Registration successful!");
+        setTimeout(() => navigate("/login"), 1500);
       })
       .catch((error) => toast.error(error.message));
   };
@@ -30,103 +27,111 @@ const Register = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then(() => {
-        toast.success("Google registration successful!", { duration: 1000 });
-        setTimeout(() => navigate("/"), 1000);
+        toast.success("🚀 Signed in with Google");
+        setTimeout(() => navigate("/"), 1200);
       })
       .catch((error) => toast.error(error.message));
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
       <Toaster position="top-center" />
 
-      <div className="card bg-base-300 w-full max-w-sm shadow-2xl rounded-2xl p-6">
-        <h1 className="text-3xl font-bold text-center mb-6 text-base-400">
-          Register
-        </h1>
+      {/* Glow background */}
+      
 
-        <form onSubmit={handleRegister} className="space-y-4">
-          <div>
-            <label className="label text-gray-700">Name</label>
-            <input
-              name="name"
-              type="text"
-              className="input input-bordered w-full"
-              required
-              placeholder="Your Name"
-            />
-          </div>
+      {/* Card */}
+      <div className="relative w-full max-w-sm rounded-3xl p-[2px] bg-transparent shadow-2xl">
+        <div className="rounded-3xl bg-base-200/80 backdrop-blur-xl p-8">
+          <h1 className="text-3xl font-bold text-center mb-2">
+            Create Account ✨
+          </h1>
+          <p className="text-center text-sm opacity-70 mb-6">
+            Join HomeNest and explore premium listings
+          </p>
 
-          <div>
-            <label className="label text-gray-700">Email</label>
-            <input
+          <form onSubmit={handleRegister} className="space-y-4">
+            <Input label="Full Name" name="name" placeholder="John Doe" />
+            <Input
+              label="Email"
               name="email"
               type="email"
-              className="input input-bordered w-full"
-              required
-              placeholder="Email"
+              placeholder="you@email.com"
             />
-          </div>
-
-          <div>
-            <label className="label text-gray-700">Photo URL</label>
-            <input
+            <Input
+              label="Photo URL"
               name="photoURL"
-              type="text"
-              className="input input-bordered w-full"
-              required
-              placeholder="Photo URL"
+              placeholder="https://photo..."
             />
-          </div>
 
-          <div>
-            <label className="label text-gray-700">Password</label>
-            <div className="relative">
-              <input
-                name="password"
-                type={showPass ? "text" : "password"}
-                className="input input-bordered w-full pr-10"
-                required
-                placeholder="Password"
-              />
-              <span
-                onClick={() => setShowPass(!showPass)}
-                className="absolute top-3 right-3 cursor-pointer text-gray-500 hover:text-gray-700 transition-colors duration-300"
-              >
-                {showPass ? <FaEyeSlash /> : <FaEye />}
-              </span>
+            {/* Password */}
+            <div>
+              <label className="text-sm font-medium opacity-80">Password</label>
+              <div className="relative mt-1">
+                <input
+                  name="password"
+                  type={showPass ? "text" : "password"}
+                  className="input input-bordered w-full pr-10 focus:ring-2 focus:ring-purple-500"
+                  required
+                  placeholder="••••••••"
+                />
+                <span
+                  onClick={() => setShowPass(!showPass)}
+                  className="absolute right-3 top-3 cursor-pointer opacity-60 hover:opacity-100 transition"
+                >
+                  {showPass ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
-          </div>
 
+            <button
+              type="submit"
+              className="btn w-full rounded-xl text-white font-semibold
+              bg-gradient-to-r from-[#3498db] to-[#9b59b6]
+              hover:scale-[1.02] transition-all duration-300 shadow-lg"
+            >
+              Create Account
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="divider my-6 text-xs opacity-60">OR</div>
+
+          {/* Google */}
           <button
-            type="submit"
-            className="btn w-full text-white font-semibold bg-gradient-to-r from-[#3498db] to-[#9b59b6] border-none hover:opacity-90 transition-all duration-300 mt-4"
+            onClick={handleGoogleSignIn}
+            className="btn w-full rounded-xl bg-base-100 hover:bg-base-300
+            flex items-center gap-2 transition-all duration-300"
           >
-            Register
+            <FcGoogle className="text-xl" />
+            Continue with Google
           </button>
-        </form>
 
-        {/* Google Login */}
-        <button
-          onClick={handleGoogleSignIn}
-          className="btn w-full flex items-center justify-center gap-2 bg-base-300 text-base-400 border-[#a747db] hover:bg-base-200 mt-4 transition-all duration-300"
-        >
-          <FcGoogle /> Continue with Google
-        </button>
-
-        {/* Link to Login */}
-        <p className="text-center text-sm mt-4 text-gray-600">
-          Already have an account?{" "}
-          <a
-            href="/login"
-            className="link link-hover font-medium text-[#3498db]"
-          >
-            Login here
-          </a>
-        </p>
+          <p className="text-center text-sm mt-6 opacity-70">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="font-medium bg-gradient-to-r from-[#3498db] to-[#9b59b6]
+              bg-clip-text text-transparent hover:underline"
+            >
+              Login here
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
+
+const Input = ({ label, ...props }) => (
+  <div>
+    <label className="text-sm font-medium opacity-80">{label}</label>
+    <input
+      {...props}
+      className="input input-bordered w-full mt-1 focus:ring-2 focus:ring-purple-500 transition"
+      required
+    />
+  </div>
+);
 
 export default Register;

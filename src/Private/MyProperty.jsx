@@ -107,7 +107,7 @@ const MyProperty = () => {
           {properties.map((property) => (
             <div
               key={property._id}
-              className="card bg-base-200 dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300"
+              className="card bg-transparent border border-base-300 dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300"
             >
               <figure>
                 <img
