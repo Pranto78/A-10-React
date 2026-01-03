@@ -80,6 +80,54 @@ body {
   }
 }
 
+/* 🧩 Light Mode Grid Background */
+/* 🧩 Premium Light Mode Cross Grid Background */
+[data-theme="light"] {
+  position: relative;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+[data-theme="light"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  /* Cross-grid (tic-tac-toe style) */
+  background-image:
+    /* Vertical lines */
+    linear-gradient(to right,
+      rgba(52, 152, 219, 0.06) 1px,
+      transparent 1px),
+    /* Horizontal lines */
+    linear-gradient(to bottom,
+      rgba(52, 152, 219, 0.06) 1px,
+      transparent 1px),
+    /* Cross intersections */
+    radial-gradient(circle at center,
+      rgba(52, 152, 219, 0.08) 1px,
+      transparent 2px);
+
+  background-size:
+    56px 56px,
+    56px 56px,
+    56px 56px;
+
+  /* Slight offset for natural look */
+  background-position:
+    0 0,
+    0 0,
+    28px 28px;
+
+  /* Soft vignette fade */
+  mask-image: radial-gradient(circle at center,
+      rgba(0, 0, 0, 1) 45%,
+      rgba(0, 0, 0, 0.65) 70%,
+      rgba(0, 0, 0, 0) 100%);
+}
+
 
 /* 🌈 Global Gradients */
 .gradient-text {
