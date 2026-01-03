@@ -21,6 +21,7 @@ import MyRatings from "./Private/MyRatings.jsx";
 import Update from "./Private/Update.jsx";
 import MyPropertiesDetails from "./Private/MyPropertiesDetails.jsx";
 import PartnerShip from "./Components/PartnerShip.jsx";
+import AboutUs from "./Pages/AboutUs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "registration",
         element: <Registration></Registration>
+      },
+      {
+        path:"aboutUs",
+        element:<AboutUs></AboutUs>
       },
       {
         path: "addProperty",
