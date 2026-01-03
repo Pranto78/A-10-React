@@ -38,19 +38,19 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink className="nav-item font-bold" to="/">
+        <NavLink className="nav-item font-bold " to="/">
           <FaHome /> Home
         </NavLink>
       </li>
 
       <li>
-        <NavLink className="nav-item font-bold" to="/allProperties">
+        <NavLink className="nav-item font-bold " to="/allProperties">
           <BsHousesFill /> All Properties
         </NavLink>
       </li>
 
       <li>
-        <NavLink className="nav-item font-bold" to="/aboutUs">
+        <NavLink className="nav-item font-bold " to="/aboutUs">
           <FaHouseCircleExclamation /> About Us
         </NavLink>
       </li>
@@ -58,19 +58,19 @@ const Navbar = () => {
       {user && (
         <>
           <li>
-            <NavLink className="nav-item font-bold" to="/addProperty">
+            <NavLink className="nav-item font-bold " to="/addProperty">
               <BsFillHouseAddFill /> Add Property
             </NavLink>
           </li>
 
           <li>
-            <NavLink className="nav-item font-bold" to="/myProperties">
+            <NavLink className="nav-item font-bold " to="/myProperties">
               <FaHouseUser /> My Properties
             </NavLink>
           </li>
 
           <li>
-            <NavLink className="nav-item font-bold" to="/myRatings">
+            <NavLink className="nav-item font-bold " to="/myRatings">
               <MdOutlineStarRate /> My Ratings
             </NavLink>
           </li>
@@ -126,7 +126,7 @@ const Navbar = () => {
           {/* Logo */}
           <NavLink to="/" className="flex items-center gap-2">
             <img src={logo} className="h-[40px] w-[40px]" alt="Logo" />
-            <span className="font-bold text-lg sm:text-xl whitespace-nowrap gradient-text-hover">
+            <span className="font-bold  text-lg sm:text-xl whitespace-nowrap gradient-text-hover">
               Home <span className="text-purple-500">Nest</span>
             </span>
           </NavLink>
@@ -180,7 +180,7 @@ const Navbar = () => {
               {dropdownOpen && (
                 <ul className="absolute right-0 mt-3 w-56 bg-base-200 dark:bg-base-300 rounded-xl shadow-xl p-3">
                   <li className="border-b p-3">
-                    <p className="font-bold">{user.displayName}</p>
+                    <p className="font-bold ">{user.displayName}</p>
                     <p className="text-xs opacity-60">{user.email}</p>
                   </li>
                   <li className="p-2">
@@ -204,7 +204,7 @@ const Navbar = () => {
           {/* Close */}
           <button
             onClick={() => setMobileMenu(false)}
-            className="text-4xl font-bold text-white absolute top-6 right-6"
+            className="text-4xl font-bold  text-white absolute top-6 right-6"
           >
             ✕
           </button>
