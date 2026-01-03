@@ -1,35 +1,119 @@
-HomeNest – Real Estate Property Listing Platform
+# 🏡 HomeNest – Real Estate Property Listing Platform
 
-HomeNest is a modern real-estate listing web application where users can browse, post, update, and manage properties for rent or sale. It includes full authentication, CRUD functionality, dynamic property filtering, and a clean UI for a seamless experience.
+HomeNest is a modern real estate web application where users can browse, post, update, and manage properties for rent or sale. It features full authentication, CRUD functionality, dynamic property filtering, and a clean, responsive UI for a seamless experience.
+
+---
+
+## 🌟 Features
+
+- 🔐 **User Authentication (Firebase)** – Email/password login, Google login, protected routes
+- 🏘️ **Add, Update & Delete Properties** – Full CRUD functionality with MongoDB + Express
+- ⭐ **Ratings & Reviews System** – Users can leave feedback with star ratings
+- 🏡 **Dynamic Home Page** – Featured properties, sliders, static sections
+- 🔍 **All Properties Page** – Filter/search, sorting (newest first), and detailed info
+- 👤 **My Properties** – View only logged-in user's listings
+- ⭐ **My Ratings** – View all reviews posted by user
+- 🌓 **Dark & Light Theme** – Smooth toggle for the entire site
+- 🚫 **Custom 404 Page** – Not-found page
+- ⚡ **Loading Spinners** – For data fetch
+- 🍞 **Toast Notifications** – Smooth user feedback
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:**  
+React.js, React Router, Tailwind CSS + DaisyUI, Swiper Slider, React Icons, React Hot Toast, Firebase Authentication  
+
+**Backend:**  
+Node.js, Express.js, MongoDB (Atlas), CORS, dotenv, Vercel Serverless Functions  
+
+---
+
+## 📌 Pages & Features (Detailed)
+
+### 🔹 Header / Navbar
+- Home, All Properties, Add Property (Private), My Properties (Private), My Ratings (Private), Login / Signup
+- Logged-in users see profile photo, name, email, logout dropdown
+
+### 🔹 Home Page
+- 3-slide banner/slider
+- Featured properties (6 latest)
+- Static Why Choose Us section + 2 additional meaningful sections
+- Footer with logo, links, socials
+
+### 🔹 Authentication
+- Login: Email/Password + Google Login, redirects user after login, toast messages
+- Signup: Name, Email, Photo URL, Password (Validation: 1 uppercase, 1 lowercase, min 6 chars)
+- ⚠ No email verification / Forgot password
+
+### 🔹 CRUD Operations
+- **Add Property (Private)**: Name, Description, Category, Price, Location, Image URL, auto-filled user info, saved to MongoDB
+- **My Properties (Private)**: Shows only user’s properties, options to Update/Delete, confirmation via Toast/SweetAlert
+- **Update Property (Private)**: Prefilled form, editable fields (except user info), instant reflection on MongoDB
+- **All Properties (Public)**: Cards with Name, Category, Price, Location, Thumbnail, Posted by, See Details
+- **Property Details (Private)**: Full info, image gallery, ratings & reviews
+
+### 🔹 Ratings & Reviews
+- Star rating (1–5), review text, reviewer name, date
+- **My Ratings (Private)**: View all user-made ratings
+
+### 🔹 Other Features
+- Custom 404 Not Found page
+- Loading Spinner during data fetch
+- Protected route handling
+- No Lorem Ipsum or JS alerts
+
+---
+
+## 📷 Screenshots
+
+<p align="center">
+  <img src="https://github.com/Pranto78/A-10-React/blob/main/Screenshot%202025-11-19%20003228.png" width="80%" alt="Home Page Screenshot"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/Pranto78/A-10-React/blob/main/Screenshot%202025-11-19%20003302.png" width="80%" alt="Property Details Screenshot"/>
+</p>
+
+---
+
+## 🚀 Live Demo & Links
+
+- **Live Site:** https://scintillating-valkyrie-c953b9.netlify.app/  
+- **Server Repo:** https://github.com/Pranto78/A-10-Server.git   
+
+---
+
+## 💻 Installation & Running Locally
 
 
-🌟 Features
+Frontend Setup
 
-🔐 User Authentication (Firebase) – Email/password login, Google login, protected routes
+cd HomeNest-Client
+npm install
+npm start
 
-🏘️ Add, Update & Delete Properties – Full CRUD with MongoDB + Express
 
-⭐ Ratings & Reviews System – Users can leave feedback with star ratings
+Backend Setup
 
-🏡 Dynamic Home Page – Featured properties, sliders, static sections
+cd HomeNest-Server
+npm install
+npm run dev
 
-🔍 All Properties Page – Filter/search, sorting (newest first), and detailed info
 
-👤 My Properties – View only logged-in user's listings
+Open http://localhost:3000
+ in your browser to view the app.
 
-⭐ My Ratings – View all reviews user has posted
+⚡ Dependencies
 
-🌓 Dark & Light Theme – Smooth toggle for the entire site
+React, React Router, Tailwind CSS, DaisyUI, Swiper, React Icons, React Hot Toast
 
-🚫 404 Page – Custom not-found page
+Node.js, Express.js, MongoDB, Firebase, CORS, dotenv
 
-⚡ Loading Spinners for data fetch
+🎯 Project Theme
 
-🍞 Toast Notifications (No alerts/Lorem text used)
-
-📚 Project Theme
-
-HomeNest is a real estate listing platform where property owners can post available properties (rent/sale), and users can explore listings based on:
+HomeNest allows property owners to post listings and users to browse/search based on:
 
 Location
 
@@ -41,263 +125,12 @@ Category
 
 It provides a clean UI, smooth navigation, and full user-based property and review management.
 
-🛠️ Tech Stack
-Frontend
+🏆 Achievements
 
-React.js
+Fully responsive modern web app
 
-React Router
+Complete authentication + CRUD operations
 
-Tailwind CSS + DaisyUI
+Dynamic UI with real-time data
 
-Swiper Slider
-
-React Icons
-
-React Hot Toast
-
-Firebase Authentication
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB (Atlas)
-
-CORS
-
-dotenv
-
-Vercel Serverless Functions
-
-📌 Main Pages & Features (Detailed)
-🔗 Header / Navbar
-
-Home
-
-All Properties
-
-Add Property (Private)
-
-My Properties (Private)
-
-My Ratings (Private)
-
-Login / Signup
-
-If logged in → show profile photo, name, email, logout dropdown
-
-🏠 Home Page
-
-Contains:
-
-✔ 3-slide image/banner slider
-
-✔ Featured properties (6 latest items) using .sort()
-
-✔ Static Why Choose Us section
-
-✔ 2 additional meaningful sections
-
-✔ Footer with logo, links, socials
-
-🔐 Authentication
-Login
-
-Email + Password
-
-Google Login
-
-Redirects user after login
-
-Shows toast messages
-
-Registration
-
-Name
-
-Email
-
-Photo URL
-
-Password (with validation):
-
-At least 1 uppercase
-
-At least 1 lowercase
-
-Minimum length 6
-
-Google Signup
-
-⚠ No email verification or forgot password (as instructed).
-
-🧱 CRUD Operations
-🏢 Add Property (Private Route)
-
-Fields:
-
-Property name
-
-Description
-
-Category
-
-Price
-
-Location
-
-Image URL
-
-User name (auto-filled)
-
-User email (auto-filled)
-
-✔ Saves to MongoDB
-✔ Shows toast/success message
-
-📦 My Properties (Private)
-
-Shows only logged-in user’s properties.
-
-Each card includes:
-
-Name
-
-Category
-
-Price
-
-Location
-
-Posted date
-
-View Details
-
-Update
-
-Delete
-
-Delete confirmation uses SweetAlert/Toast.
-
-✏️ Update Property (Private)
-
-Prefilled form
-
-Editable:
-
-Name
-
-Description
-
-Category
-
-Price
-
-Location
-
-Image
-
-Read-only:
-
-User name
-
-User email
-
-✔ Updates MongoDB
-✔ Reflects instantly
-✔ Navigates to property details
-
-🏘️ All Properties Page (Public)
-
-Card includes:
-
-Name
-
-Category
-
-Price
-
-Location
-
-Thumbnail
-
-Posted by
-
-See Details button
-
-🏡 Property Details Page (Private)
-
-Shows complete property info:
-
-Image gallery
-
-Name
-
-Category
-
-Price
-
-Location
-
-Description
-
-Posted by & email
-
-Posted date
-
-⭐ Ratings & Reviews Section
-
-Users can give:
-
-Star rating (1–5)
-
-Review text
-
-Reviews are displayed with:
-
-Reviewer name
-
-Rating
-
-Comment
-
-Date
-
-⭐ My Ratings Page (Private)
-
-Shows all user-made ratings with:
-
-Property name
-
-Reviewer name
-
-Stars
-
-Comment
-
-Date
-
-Thumbnail
-
-🧭 Other Features
-
-✔ Custom 404 Not Found Page
-
-✔ Loading Spinner when fetching data
-
-✔ Protected route handling (no redirect on reload)
-
-✔ No lorem ipsum text used
-
-✔ No default JavaScript alerts
-
-🚀 Hosting
-
-Client: Netlify / Surge / Firebase
-
-Server: Vercel (with environment variables)
-
-Supports route reload (SPA friendly
+“Code, Create, Improve — Repeat.”
