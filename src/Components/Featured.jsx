@@ -71,7 +71,7 @@ const Featured = () => {
                 <motion.div
                   variants={cardVariants}
                   whileHover="hover"
-                  className="card bg-base-200 dark:bg-gray-800 shadow-lg border border-base-300 dark:border-gray-700 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col h-full"
+                  className="card bg-transparent shadow-lg border border-base-300  rounded-2xl overflow-hidden transition-all duration-300 flex flex-col h-full"
                 >
                   {/* Image */}
                   <figure className="relative h-52">

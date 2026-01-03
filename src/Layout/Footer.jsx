@@ -25,7 +25,7 @@ const Footer = () => {
     <footer
       className={`transition-all duration-500 mt-10 ${
         theme === "light"
-          ? "bg-gradient-to-t from-[#b96dd7] to-[#4398d1]"
+          ? "bg-transparent"
           : "bg-transparent"
       } text-base-content`}
     >

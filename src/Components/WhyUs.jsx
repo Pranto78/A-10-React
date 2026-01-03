@@ -42,7 +42,7 @@ const WhyUs = () => {
           {whyUsData.map((item, i) => (
             <div
               key={i}
-              className="bg-base-100 p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center"
+              className="bg-transparent border border-base-300 p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center"
             >
               <div className="mb-4">{item.icon}</div>
               <h3 className="text-xl font-semibold text-base-content mb-2">

@@ -45,17 +45,28 @@ const PartnerShip = () => {
         >
           {logos.map((logo, idx) => (
             <SwiperSlide key={idx}>
-              <div className="p-4 bg-gray-400 dark:bg-gray-400 rounded-xl shadow-sm flex justify-center items-center">
+              <div
+                className="
+                  p-4
+                  rounded-xl
+                  flex justify-center items-center
+                  transition-all duration-300
+                  bg-transparent
+                  dark:bg-transparent
+                  dark:backdrop-blur-md
+                  dark:border dark:border-white/10
+                "
+              >
                 <img
                   src={logo}
                   alt="partner logo"
                   className="
-      h-16 w-auto object-contain 
-      opacity-90 
-      transition duration-300 
-      hover:opacity-100 hover:scale-[1.05]
-      dark:brightness-150 dark:contrast-125
-    "
+                    h-16 w-auto object-contain
+                    opacity-90
+                    transition duration-300
+                    hover:opacity-100 hover:scale-[1.05]
+                    dark:brightness-150 dark:contrast-125
+                  "
                 />
               </div>
             </SwiperSlide>

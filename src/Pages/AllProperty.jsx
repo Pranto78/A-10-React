@@ -81,7 +81,7 @@ const AllProperty = () => {
               viewport={{ once: false, amount: 0.3 }}
               whileHover="hover"
               exit="hidden"
-              className="card bg-base-200 dark:bg-gray-800 shadow-lg border border-base-300 dark:border-gray-700 rounded-2xl overflow-hidden flex flex-col h-full transition-all duration-300"
+              className="card bg-transparent shadow-lg border border-white rounded-2xl overflow-hidden flex flex-col h-full transition-all duration-300"
             >
               {/* Image */}
               <figure className="relative h-52">
