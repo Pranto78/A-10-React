@@ -80,7 +80,7 @@ Node.js, Express.js, MongoDB (Atlas), CORS, dotenv, Vercel Serverless Functions
 
 ## 🚀 Live Demo & Links
 
-- **Live Site:** https://scintillating-valkyrie-c953b9.netlify.app/  
+- **Live Site:** https://real-estate-78.netlify.app/ 
 - **Server Repo:** https://github.com/Pranto78/A-10-Server.git   
 
 ---
